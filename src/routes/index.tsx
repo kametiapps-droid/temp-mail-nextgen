@@ -227,7 +227,7 @@ function HomePage() {
                 </div>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Expires in <span className="font-medium text-foreground">{expiresIn}</span>. Inbox refreshes every 8 seconds.
+                Expires in <span className="font-medium text-foreground">{expiresIn}</span>. Inbox refreshes every 20 seconds.
               </p>
             </>
           ) : (
