@@ -4,7 +4,6 @@ const cols = [
   {
     title: "Product",
     links: [
-      { to: "/", label: "Inbox" },
       { to: "/features", label: "Features" },
       { to: "/how-it-works", label: "How it works" },
       { to: "/use-cases", label: "Use cases" },
