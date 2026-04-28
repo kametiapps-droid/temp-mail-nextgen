@@ -8,9 +8,9 @@ export const API_URL =
 export const TEMPMAIL_DOMAIN =
   (import.meta.env.VITE_TEMPMAIL_DOMAIN as string | undefined) || "mytempmail.pro";
 
-export const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as
-  | string
-  | undefined || "0x4AAAAAADBQjYymjLJ35UGX";
+export const TURNSTILE_SITE_KEY =
+  (import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined) ||
+  "0x4AAAAAADBQjYymjLJ35UGX";
 
 export interface TempEmail {
   id: string;
