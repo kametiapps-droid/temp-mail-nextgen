@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 const nav = [
-  { to: "/", label: "Inbox" },
   { to: "/features", label: "Features" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/use-cases", label: "Use cases" },
