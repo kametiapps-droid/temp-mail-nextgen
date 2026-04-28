@@ -117,19 +117,32 @@ function HomePage() {
     }
   }, [tsToken, tsReset]);
 
-  // poll inbox every 8s
+  // poll inbox: 20s when visible, paused when hidden — saves Worker requests
   useEffect(() => {
     if (!email) return;
     let stopped = false;
+    let timer: ReturnType<typeof setInterval> | null = null;
     const fetchInbox = async () => {
+      if (document.hidden) return;
       try {
         const m = await getInbox(email.id);
         if (!stopped) setMessages(m);
       } catch {}
     };
-    fetchInbox();
-    const t = setInterval(fetchInbox, 8000);
-    return () => { stopped = true; clearInterval(t); };
+    const start = () => {
+      if (timer) return;
+      fetchInbox();
+      timer = setInterval(fetchInbox, 20000);
+    };
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const onVis = () => { document.hidden ? stop() : start(); };
+    start();
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      stopped = true;
+      stop();
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, [email]);
 
   const copy = useCallback(async () => {
@@ -214,7 +227,7 @@ function HomePage() {
                 </div>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Expires in <span className="font-medium text-foreground">{expiresIn}</span>. Inbox refreshes every 8 seconds.
+                Expires in <span className="font-medium text-foreground">{expiresIn}</span>. Inbox refreshes every 20 seconds.
               </p>
             </>
           ) : (
