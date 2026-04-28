@@ -5,7 +5,7 @@ export const API_URL =
   (import.meta.env.VITE_API_URL as string | undefined) ||
   "https://mytempmail-api.kametiapps.workers.dev";
 
-export const TEMPMAIL_DOMAIN =
+export const DEFAULT_DOMAIN =
   (import.meta.env.VITE_TEMPMAIL_DOMAIN as string | undefined) || "mytempmail.pro";
 
 export const TURNSTILE_SITE_KEY =
@@ -42,30 +42,40 @@ async function http<T>(path: string, init: RequestInit = {}): Promise<T> {
   const data = text ? JSON.parse(text) : null;
   if (!res.ok) {
     const msg = (data && (data.error || data.message)) || `Request failed (${res.status})`;
-    throw new Error(msg);
+    const err = new Error(msg) as Error & { status?: number; code?: string };
+    err.status = res.status;
+    if (data?.code) err.code = data.code;
+    throw err;
   }
   return data as T;
 }
 
-function randomLocalPart(): string {
+export function randomLocalPart(): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   let s = "";
   for (let i = 0; i < 10; i++) s += chars[Math.floor(Math.random() * chars.length)];
   return s;
 }
 
-export async function createEmail(opts?: {
+export async function getDomains(): Promise<string[]> {
+  const r = await http<{ domains: string[] }>("/domains");
+  return r.domains;
+}
+
+export async function createEmail(opts: {
   localPart?: string;
+  domain?: string;
   turnstileToken?: string;
 }): Promise<TempEmail> {
-  const local = (opts?.localPart || randomLocalPart()).toLowerCase();
-  const email_address = `${local}@${TEMPMAIL_DOMAIN}`;
+  const local = (opts.localPart || randomLocalPart()).toLowerCase();
+  const domain = (opts.domain || DEFAULT_DOMAIN).toLowerCase();
+  const email_address = `${local}@${domain}`;
   const headers: Record<string, string> = {};
-  if (opts?.turnstileToken) headers["x-turnstile-token"] = opts.turnstileToken;
+  if (opts.turnstileToken) headers["x-turnstile-token"] = opts.turnstileToken;
   return http<TempEmail>("/emails", {
     method: "POST",
     headers,
-    body: JSON.stringify({ email_address, domain: TEMPMAIL_DOMAIN }),
+    body: JSON.stringify({ email_address, domain }),
   });
 }
 
@@ -83,6 +93,53 @@ export async function deleteEmail(emailId: string): Promise<void> {
 
 export async function getExpiry(emailId: string): Promise<{ expires_at: string }> {
   return http(`/emails/${emailId}/expiry`);
+}
+
+// SSE inbox stream — returns a closer function
+export function subscribeInbox(
+  emailId: string,
+  opts: {
+    since?: string;
+    onMessages: (msgs: InboxMessage[]) => void;
+    onError?: (err: Event) => void;
+  }
+): () => void {
+  let es: EventSource | null = null;
+  let closed = false;
+  let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const open = () => {
+    if (closed) return;
+    const url = new URL(`${API_URL}/api/inbox/${emailId}/stream`);
+    if (opts.since) url.searchParams.set("since", opts.since);
+    es = new EventSource(url.toString());
+    es.addEventListener("messages", (e) => {
+      try {
+        const data = JSON.parse((e as MessageEvent).data) as InboxMessage[];
+        opts.onMessages(data);
+      } catch {}
+    });
+    es.addEventListener("close", () => {
+      es?.close();
+      es = null;
+      // worker closed at max duration — reconnect immediately
+      if (!closed) reconnectTimer = setTimeout(open, 500);
+    });
+    es.onerror = (e) => {
+      opts.onError?.(e);
+      es?.close();
+      es = null;
+      if (!closed) reconnectTimer = setTimeout(open, 3000);
+    };
+  };
+
+  open();
+
+  return () => {
+    closed = true;
+    if (reconnectTimer) clearTimeout(reconnectTimer);
+    es?.close();
+  };
 }
 
 // Blog
