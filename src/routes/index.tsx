@@ -202,10 +202,10 @@ function HomePage() {
           <span className="h-1.5 w-1.5 rounded-full bg-success" /> Real-time · No signup · Free
         </p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-          Disposable email,<br className="hidden sm:block" /> in one click.
+          Free Temporary<br className="hidden sm:block" /> Email Service
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          Generate a free temporary email. Pick a custom name & domain. Receive messages instantly.
+          Instant Temp Email, No sign-up. Generate a free temporary email that helps to protect your privacy and inbox from spam.
         </p>
       </section>
 
