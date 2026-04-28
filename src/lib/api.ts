@@ -10,7 +10,7 @@ export const TEMPMAIL_DOMAIN =
 
 export const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as
   | string
-  | undefined;
+  | undefined || "0x4AAAAAADBQjYymjLJ35UGX";
 
 export interface TempEmail {
   id: string;
