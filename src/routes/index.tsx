@@ -3,10 +3,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Mail,
   ShieldCheck,
-  Zap,
   Trash2,
   Lock,
-  Globe2,
   UserX,
   Download,
   ShoppingBag,
@@ -361,23 +359,6 @@ function HomePage() {
           </div>
         </section>
       )}
-
-      {/* Trust strip */}
-      <section className="mt-20 grid gap-6 sm:grid-cols-3">
-        {[
-          { icon: Zap, t: "Real-time", d: "Messages appear instantly via a live connection — no refresh." },
-          { icon: Globe2, t: "Same across tabs", d: "Open in 10 tabs — same inbox everywhere, persists on refresh." },
-          { icon: ShieldCheck, t: "Spam shield", d: "Use it for forms, downloads, trials — keep your real email private." },
-        ].map((f) => (
-          <div key={f.t} className="rounded-2xl border border-border bg-card p-5">
-            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <f.icon className="h-5 w-5" />
-            </div>
-            <h3 className="text-base font-semibold">{f.t}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{f.d}</p>
-          </div>
-        ))}
-      </section>
 
       {/* What is Temporary Email? */}
       <WhatIsTempMail />
