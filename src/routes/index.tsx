@@ -3,26 +3,32 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   createEmail,
   deleteEmail,
-  getInbox,
+  DEFAULT_DOMAIN,
+  getDomains,
   markRead,
   TURNSTILE_SITE_KEY,
   type InboxMessage,
-  type TempEmail,
 } from "../lib/api";
+import {
+  applyIncoming,
+  clearEmail,
+  markMessageRead,
+  setEmail,
+  useEmailStore,
+  useInboxStream,
+} from "../lib/email-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Free Temporary Email — Instant Disposable Inbox | MyTempMail" },
-      { name: "description", content: "Generate a free disposable email address instantly. No registration. Avoid spam and keep your real inbox clean." },
+      { name: "description", content: "Generate a free disposable email address instantly. Pick a custom name and domain. No registration. Avoid spam and keep your real inbox clean." },
       { property: "og:title", content: "MyTempMail — Free Disposable Temporary Email" },
-      { property: "og:description", content: "Instant disposable email. No signup. Free forever." },
+      { property: "og:description", content: "Instant disposable email with custom name & domain. No signup. Free forever." },
     ],
   }),
   component: HomePage,
 });
-
-const STORAGE_KEY = "mytempmail.email";
 
 declare global {
   interface Window {
@@ -30,18 +36,17 @@ declare global {
       render: (el: HTMLElement, opts: { sitekey: string; callback: (t: string) => void; "error-callback"?: () => void }) => string;
       reset: (id?: string) => void;
       remove: (id: string) => void;
-      execute?: (id: string) => void;
     };
   }
 }
 
-function useTurnstileToken(): { token: string | null; ref: React.RefObject<HTMLDivElement | null>; reset: () => void } {
+function useTurnstileToken(active: boolean) {
   const ref = useRef<HTMLDivElement | null>(null);
   const widgetId = useRef<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!TURNSTILE_SITE_KEY) return;
+    if (!active || !TURNSTILE_SITE_KEY) return;
     const id = "cf-turnstile-script";
     if (!document.getElementById(id)) {
       const s = document.createElement("script");
@@ -64,8 +69,15 @@ function useTurnstileToken(): { token: string | null; ref: React.RefObject<HTMLD
       }
       if (attempts > 50) clearInterval(tick);
     }, 200);
-    return () => clearInterval(tick);
-  }, []);
+    return () => {
+      clearInterval(tick);
+      if (widgetId.current && window.turnstile) {
+        try { window.turnstile.remove(widgetId.current); } catch {}
+        widgetId.current = null;
+      }
+      setToken(null);
+    };
+  }, [active]);
 
   const reset = useCallback(() => {
     setToken(null);
@@ -76,74 +88,58 @@ function useTurnstileToken(): { token: string | null; ref: React.RefObject<HTMLD
 }
 
 function HomePage() {
-  const [email, setEmail] = useState<TempEmail | null>(null);
-  const [messages, setMessages] = useState<InboxMessage[]>([]);
-  const [selected, setSelected] = useState<InboxMessage | null>(null);
+  const { email, inbox } = useEmailStore();
+  useInboxStream();
+
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selected = useMemo(() => inbox.find((m) => m.id === selectedId) || null, [inbox, selectedId]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const { token: tsToken, ref: tsRef, reset: tsReset } = useTurnstileToken();
 
-  // restore from localStorage
+  // Custom dialog state
+  const [customOpen, setCustomOpen] = useState(false);
+  const [customLocal, setCustomLocal] = useState("");
+  const [customDomain, setCustomDomain] = useState(DEFAULT_DOMAIN);
+  const [domains, setDomains] = useState<string[]>([DEFAULT_DOMAIN]);
+
+  // Captcha is needed only when there is no email yet (creation flow)
+  const captchaActive = !email;
+  const { token: tsToken, ref: tsRef, reset: tsReset } = useTurnstileToken(captchaActive);
+
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as TempEmail;
-      if (parsed && new Date(parsed.expires_at) > new Date()) setEmail(parsed);
-      else localStorage.removeItem(STORAGE_KEY);
-    } catch {}
+    getDomains().then(setDomains).catch(() => {});
   }, []);
 
-  const generate = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      if (TURNSTILE_SITE_KEY && !tsToken) {
-        setError("Please complete the captcha first.");
-        setLoading(false);
-        return;
-      }
-      const e = await createEmail({ turnstileToken: tsToken || undefined });
-      setEmail(e);
-      setMessages([]);
-      setSelected(null);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(e));
-      tsReset();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to generate email");
-    } finally {
-      setLoading(false);
-    }
-  }, [tsToken, tsReset]);
-
-  // poll inbox: 20s when visible, paused when hidden — saves Worker requests
-  useEffect(() => {
-    if (!email) return;
-    let stopped = false;
-    let timer: ReturnType<typeof setInterval> | null = null;
-    const fetchInbox = async () => {
-      if (document.hidden) return;
+  const create = useCallback(
+    async (opts: { localPart?: string; domain?: string }) => {
+      setLoading(true);
+      setError(null);
       try {
-        const m = await getInbox(email.id);
-        if (!stopped) setMessages(m);
-      } catch {}
-    };
-    const start = () => {
-      if (timer) return;
-      fetchInbox();
-      timer = setInterval(fetchInbox, 20000);
-    };
-    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-    const onVis = () => { document.hidden ? stop() : start(); };
-    start();
-    document.addEventListener("visibilitychange", onVis);
-    return () => {
-      stopped = true;
-      stop();
-      document.removeEventListener("visibilitychange", onVis);
-    };
-  }, [email]);
+        if (TURNSTILE_SITE_KEY && !tsToken) {
+          setError("Please complete the captcha first.");
+          setLoading(false);
+          return;
+        }
+        const e = await createEmail({
+          localPart: opts.localPart,
+          domain: opts.domain,
+          turnstileToken: tsToken || undefined,
+        });
+        setEmail(e);
+        setSelectedId(null);
+        setCustomOpen(false);
+        setCustomLocal("");
+        tsReset();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to generate email");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [tsToken, tsReset]
+  );
 
   const copy = useCallback(async () => {
     if (!email) return;
@@ -154,20 +150,19 @@ function HomePage() {
 
   const remove = useCallback(async () => {
     if (!email) return;
+    if (!confirm("Delete this email and all its messages? This cannot be undone.")) return;
     try { await deleteEmail(email.id); } catch {}
-    localStorage.removeItem(STORAGE_KEY);
-    setEmail(null);
-    setMessages([]);
-    setSelected(null);
+    clearEmail();
+    setSelectedId(null);
   }, [email]);
 
   const open = useCallback(async (msg: InboxMessage) => {
-    setSelected(msg);
+    setSelectedId(msg.id);
     if (!msg.is_read) {
-      try {
-        await markRead(msg.id);
-        setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, is_read: true } : m));
-      } catch {}
+      markMessageRead(msg.id);
+      try { await markRead(msg.id); } catch {}
+      // refresh-style: update store with the read flag
+      applyIncoming([{ ...msg, is_read: true }]);
     }
   }, []);
 
@@ -179,18 +174,20 @@ function HomePage() {
     return `${min} min`;
   }, [email]);
 
+  const validLocal = /^[a-z0-9._-]{1,32}$/.test(customLocal.toLowerCase());
+
   return (
     <main className="mx-auto max-w-5xl px-4 pb-16 pt-12 sm:pt-20">
       {/* Hero */}
       <section className="text-center">
         <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">
-          <span className="h-1.5 w-1.5 rounded-full bg-success" /> No signup · No spam · Free
+          <span className="h-1.5 w-1.5 rounded-full bg-success" /> Real-time · No signup · Free
         </p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
           Disposable email,<br className="hidden sm:block" /> in one click.
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          Generate a free temporary email address. Receive messages instantly. Protect your real inbox from spam.
+          Generate a free temporary email. Pick a custom name & domain. Receive messages instantly.
         </p>
       </section>
 
@@ -203,7 +200,7 @@ function HomePage() {
                 <div className="flex-1 overflow-hidden rounded-xl bg-muted px-4 py-3">
                   <p className="truncate font-mono text-base sm:text-lg">{email.email_address}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={copy}
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
@@ -211,36 +208,73 @@ function HomePage() {
                     {copied ? "Copied!" : "Copy"}
                   </button>
                   <button
-                    onClick={generate}
-                    disabled={loading}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium hover:bg-accent disabled:opacity-50"
-                  >
-                    New
-                  </button>
-                  <button
                     onClick={remove}
-                    aria-label="Delete"
-                    className="inline-flex items-center justify-center rounded-xl border border-border bg-background px-3 py-3 text-sm hover:bg-destructive hover:text-destructive-foreground"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium hover:bg-destructive hover:text-destructive-foreground"
                   >
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2m-9 0v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"/></svg>
+                    Delete
                   </button>
                 </div>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Expires in <span className="font-medium text-foreground">{expiresIn}</span>. Inbox refreshes every 20 seconds.
+                Expires in <span className="font-medium text-foreground">{expiresIn}</span> · Live inbox · Synced across all your tabs
               </p>
             </>
           ) : (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
               <p className="text-sm text-muted-foreground">No email yet.</p>
               {TURNSTILE_SITE_KEY && <div ref={tsRef} />}
-              <button
-                onClick={generate}
-                disabled={loading}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
-              >
-                {loading ? "Generating…" : "Generate temporary email"}
-              </button>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  onClick={() => create({})}
+                  disabled={loading}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
+                >
+                  {loading ? "Generating…" : "Generate random"}
+                </button>
+                <button
+                  onClick={() => setCustomOpen((v) => !v)}
+                  disabled={loading}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-medium hover:bg-accent disabled:opacity-50"
+                >
+                  {customOpen ? "Cancel custom" : "Custom email"}
+                </button>
+              </div>
+
+              {customOpen && (
+                <div className="mt-2 w-full max-w-xl rounded-xl border border-border bg-background p-4 text-left">
+                  <label className="text-xs font-medium text-muted-foreground">Custom address</label>
+                  <div className="mt-2 flex flex-col items-stretch gap-2 sm:flex-row">
+                    <input
+                      autoFocus
+                      value={customLocal}
+                      onChange={(e) => setCustomLocal(e.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))}
+                      placeholder="your-name"
+                      maxLength={32}
+                      className="flex-1 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    />
+                    <span className="hidden items-center px-1 text-muted-foreground sm:flex">@</span>
+                    <select
+                      value={customDomain}
+                      onChange={(e) => setCustomDomain(e.target.value)}
+                      className="rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    >
+                      {domains.map((d) => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    a–z, 0–9, dot, underscore, hyphen · 1–32 chars
+                  </p>
+                  <button
+                    onClick={() => create({ localPart: customLocal, domain: customDomain })}
+                    disabled={loading || !validLocal}
+                    className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-40 sm:w-auto"
+                  >
+                    {loading ? "Creating…" : `Create ${customLocal || "name"}@${customDomain}`}
+                  </button>
+                </div>
+              )}
             </div>
           )}
           {error && (
@@ -255,15 +289,15 @@ function HomePage() {
           <div className="rounded-2xl border border-border bg-card">
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <h2 className="text-sm font-semibold">Inbox</h2>
-              <span className="text-xs text-muted-foreground">{messages.length} message{messages.length !== 1 ? "s" : ""}</span>
+              <span className="text-xs text-muted-foreground">{inbox.length} message{inbox.length !== 1 ? "s" : ""}</span>
             </div>
             <ul className="max-h-[520px] divide-y divide-border overflow-y-auto">
-              {messages.length === 0 && (
+              {inbox.length === 0 && (
                 <li className="px-4 py-12 text-center text-sm text-muted-foreground">
                   Waiting for messages…
                 </li>
               )}
-              {messages.map((m) => (
+              {inbox.map((m) => (
                 <li key={m.id}>
                   <button
                     onClick={() => open(m)}
@@ -313,8 +347,8 @@ function HomePage() {
       {/* Trust strip */}
       <section className="mt-20 grid gap-6 sm:grid-cols-3">
         {[
-          { t: "No signup", d: "Get an inbox in under a second. No accounts, no passwords." },
-          { t: "Auto-expire", d: "Addresses self-destruct so your data doesn't linger." },
+          { t: "Real-time", d: "Messages appear instantly via a live connection — no refresh." },
+          { t: "Same across tabs", d: "Open in 10 tabs — same inbox everywhere, persists on refresh." },
           { t: "Spam shield", d: "Use it for forms, downloads, trials — keep your real email private." },
         ].map((f) => (
           <div key={f.t} className="rounded-2xl border border-border bg-card p-5">
