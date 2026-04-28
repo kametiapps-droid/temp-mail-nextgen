@@ -1,6 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  Mail,
+  ShieldCheck,
+  Zap,
+  Trash2,
+  Lock,
+  Globe2,
+  UserX,
+  Download,
+  ShoppingBag,
+  Newspaper,
+  Gamepad2,
+  Briefcase,
+  ChevronDown,
+  Sparkles,
+  Clock,
+  EyeOff,
+} from "lucide-react";
+import {
   createEmail,
   deleteEmail,
   DEFAULT_DOMAIN,
@@ -347,16 +365,290 @@ function HomePage() {
       {/* Trust strip */}
       <section className="mt-20 grid gap-6 sm:grid-cols-3">
         {[
-          { t: "Real-time", d: "Messages appear instantly via a live connection — no refresh." },
-          { t: "Same across tabs", d: "Open in 10 tabs — same inbox everywhere, persists on refresh." },
-          { t: "Spam shield", d: "Use it for forms, downloads, trials — keep your real email private." },
+          { icon: Zap, t: "Real-time", d: "Messages appear instantly via a live connection — no refresh." },
+          { icon: Globe2, t: "Same across tabs", d: "Open in 10 tabs — same inbox everywhere, persists on refresh." },
+          { icon: ShieldCheck, t: "Spam shield", d: "Use it for forms, downloads, trials — keep your real email private." },
         ].map((f) => (
           <div key={f.t} className="rounded-2xl border border-border bg-card p-5">
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <f.icon className="h-5 w-5" />
+            </div>
             <h3 className="text-base font-semibold">{f.t}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{f.d}</p>
           </div>
         ))}
       </section>
+
+      {/* What is Temporary Email? */}
+      <WhatIsTempMail />
+
+      {/* Use Cases */}
+      <UseCases />
+
+      {/* FAQ */}
+      <FAQ />
     </main>
+  );
+}
+
+/* ---------------- What is Temporary Email ---------------- */
+
+function WhatIsTempMail() {
+  const points = [
+    {
+      icon: Mail,
+      title: "An inbox that doesn't follow you home",
+      text: "A temporary email (also called disposable, throwaway, burner, or 10-minute mail) is a real, working email address that lives for a short time and then disappears — along with everything sent to it.",
+    },
+    {
+      icon: EyeOff,
+      title: "Built for one-time signups",
+      text: "Use it whenever a site asks for your email just to send a verification link, a download, or a coupon — without owning your inbox forever.",
+    },
+    {
+      icon: Lock,
+      title: "Your real address stays private",
+      text: "No personal data, no account, no password. Spammers, data brokers and breach lists never see your real email.",
+    },
+    {
+      icon: Trash2,
+      title: "Auto-deleted, no cleanup",
+      text: "When the timer runs out, the address and every message in it are wiped — leaving zero trace behind.",
+    },
+  ];
+
+  return (
+    <section className="mt-24">
+      <div className="text-center">
+        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          The basics
+        </p>
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          What is a Temporary Email?
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
+          A free, anonymous inbox you can spin up in one click — perfect for the moments when you'd rather not hand over your real address.
+        </p>
+      </div>
+
+      <div className="relative mt-12 grid gap-5 sm:grid-cols-2">
+        <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-primary/5 blur-2xl" />
+        {points.map((p) => (
+          <div
+            key={p.title}
+            className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
+                <p.icon className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold leading-tight">{p.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Use Cases ---------------- */
+
+function UseCases() {
+  const cases = [
+    {
+      icon: Download,
+      title: "Free downloads & ebooks",
+      text: "Grab that PDF, whitepaper or template without subscribing to a newsletter for life.",
+      color: "from-blue-500/15 to-blue-500/5 text-blue-600 dark:text-blue-400",
+    },
+    {
+      icon: Clock,
+      title: "Free trials & demos",
+      text: "Try a SaaS app or a streaming service without having to remember to cancel before charge day.",
+      color: "from-violet-500/15 to-violet-500/5 text-violet-600 dark:text-violet-400",
+    },
+    {
+      icon: ShoppingBag,
+      title: "One-off online shopping",
+      text: "Buy from a store you'll never use again — no follow-up promo emails, no abandoned cart guilt.",
+      color: "from-pink-500/15 to-pink-500/5 text-pink-600 dark:text-pink-400",
+    },
+    {
+      icon: Newspaper,
+      title: "Read paywalled articles",
+      text: "Get past 'sign up to continue reading' walls without giving up your inbox.",
+      color: "from-amber-500/15 to-amber-500/5 text-amber-600 dark:text-amber-400",
+    },
+    {
+      icon: Gamepad2,
+      title: "Game & forum signups",
+      text: "Play, comment, and post — without your real address ending up on a leaked database next year.",
+      color: "from-emerald-500/15 to-emerald-500/5 text-emerald-600 dark:text-emerald-400",
+    },
+    {
+      icon: UserX,
+      title: "Stay anonymous",
+      text: "Sign up to surveys, beta tests, giveaways and contests with zero personal trail.",
+      color: "from-rose-500/15 to-rose-500/5 text-rose-600 dark:text-rose-400",
+    },
+    {
+      icon: Briefcase,
+      title: "Test your own product",
+      text: "Developers and QA: spin up fresh inboxes to test signup flows, password resets and emails.",
+      color: "from-cyan-500/15 to-cyan-500/5 text-cyan-600 dark:text-cyan-400",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Protect against breaches",
+      text: "If a site you used gets hacked, your real email never appears in any breach list.",
+      color: "from-indigo-500/15 to-indigo-500/5 text-indigo-600 dark:text-indigo-400",
+    },
+  ];
+
+  return (
+    <section className="mt-24">
+      <div className="text-center">
+        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          Use cases
+        </p>
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          Where Temp Mail saves the day
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
+          Anywhere a site asks for your email just to "get started" — that's a perfect moment for a disposable address.
+        </p>
+      </div>
+
+      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {cases.map((c) => (
+          <div
+            key={c.title}
+            className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <div
+              className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${c.color}`}
+            >
+              <c.icon className="h-6 w-6" />
+            </div>
+            <h3 className="text-base font-semibold leading-tight">{c.title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- FAQ ---------------- */
+
+function FAQ() {
+  const items = [
+    {
+      q: "Is MyTempMail really free?",
+      a: "Yes — 100% free, forever. No signup, no credit card, no hidden 'pro' upsells. We don't sell your data because we don't collect any.",
+    },
+    {
+      q: "How long does the email address last?",
+      a: "Each address lives for a limited time (shown next to your email as 'Expires in…'). Once it expires, the address and all messages are deleted automatically.",
+    },
+    {
+      q: "Can I receive attachments?",
+      a: "Yes. Most common attachment types — PDFs, images, documents — are received and shown in the message view, just like a regular inbox.",
+    },
+    {
+      q: "Can I send emails from a temporary address?",
+      a: "No. MyTempMail is receive-only by design. This keeps the service fast, abuse-free, and impossible to use for spam.",
+    },
+    {
+      q: "Do I need to register or install anything?",
+      a: "No. Open the page, click Generate, and you have a working inbox in under a second. There's nothing to install.",
+    },
+    {
+      q: "Is it safe and private?",
+      a: "Yes. We don't ask for your name, phone or real email, and we don't track who owns which inbox. After expiry, everything is wiped — there's nothing left to leak.",
+    },
+    {
+      q: "Can I pick my own email name and domain?",
+      a: "Absolutely. Click 'Custom email' to choose your own local part (the bit before the @) and pick a domain from the list.",
+    },
+    {
+      q: "Will websites accept a temp email?",
+      a: "The vast majority do. Some banks, government sites and a few major platforms block disposable addresses — for everything else, it works perfectly.",
+    },
+  ];
+
+  const [open, setOpen] = useState<number | null>(0);
+
+  return (
+    <section className="mt-24">
+      <div className="text-center">
+        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          FAQ
+        </p>
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          Frequently asked questions
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
+          Everything you might want to know about disposable email and how MyTempMail keeps your inbox clean.
+        </p>
+      </div>
+
+      <div className="mx-auto mt-12 max-w-3xl space-y-3">
+        {items.map((item, i) => {
+          const isOpen = open === i;
+          return (
+            <div
+              key={item.q}
+              className={`overflow-hidden rounded-2xl border bg-card transition ${
+                isOpen ? "border-primary/40 shadow-sm" : "border-border"
+              }`}
+            >
+              <button
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-accent/40"
+                aria-expanded={isOpen}
+              >
+                <span className="text-base font-medium">{item.q}</span>
+                <ChevronDown
+                  className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200 ${
+                    isOpen ? "rotate-180 text-primary" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`grid transition-all duration-300 ease-out ${
+                  isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                    {item.a}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-primary/5 p-6 text-center sm:p-8">
+        <h3 className="text-xl font-semibold">Still have a question?</h3>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+          We try to keep things simple. If something isn't clear, we'd love to hear from you.
+        </p>
+        <a
+          href="/contact"
+          className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+        >
+          Contact us
+        </a>
+      </div>
+    </section>
   );
 }
