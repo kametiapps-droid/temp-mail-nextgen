@@ -12,10 +12,17 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhatIsTemporaryEmailRouteImport } from './routes/what-is-temporary-email'
 import { Route as UseCasesRouteImport } from './routes/use-cases'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
+import { Route as TempMailForTiktokRouteImport } from './routes/temp-mail-for-tiktok'
+import { Route as TempMailForOtpRouteImport } from './routes/temp-mail-for-otp'
+import { Route as TempMailForNetflixRouteImport } from './routes/temp-mail-for-netflix'
+import { Route as TempMailForInstagramRouteImport } from './routes/temp-mail-for-instagram'
+import { Route as TempMailForAmazonRouteImport } from './routes/temp-mail-for-amazon'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as FreeTemporaryEmailGeneratorRouteImport } from './routes/free-temporary-email-generator'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as DisposableEmailForVerificationRouteImport } from './routes/disposable-email-for-verification'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -38,6 +45,31 @@ const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   path: '/terms-of-service',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TempMailForTiktokRoute = TempMailForTiktokRouteImport.update({
+  id: '/temp-mail-for-tiktok',
+  path: '/temp-mail-for-tiktok',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempMailForOtpRoute = TempMailForOtpRouteImport.update({
+  id: '/temp-mail-for-otp',
+  path: '/temp-mail-for-otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempMailForNetflixRoute = TempMailForNetflixRouteImport.update({
+  id: '/temp-mail-for-netflix',
+  path: '/temp-mail-for-netflix',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempMailForInstagramRoute = TempMailForInstagramRouteImport.update({
+  id: '/temp-mail-for-instagram',
+  path: '/temp-mail-for-instagram',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempMailForAmazonRoute = TempMailForAmazonRouteImport.update({
+  id: '/temp-mail-for-amazon',
+  path: '/temp-mail-for-amazon',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
@@ -48,6 +80,12 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreeTemporaryEmailGeneratorRoute =
+  FreeTemporaryEmailGeneratorRouteImport.update({
+    id: '/free-temporary-email-generator',
+    path: '/free-temporary-email-generator',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
@@ -58,6 +96,12 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DisposableEmailForVerificationRoute =
+  DisposableEmailForVerificationRouteImport.update({
+    id: '/disposable-email-for-verification',
+    path: '/disposable-email-for-verification',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
@@ -95,10 +139,17 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/disposable-email-for-verification': typeof DisposableEmailForVerificationRoute
   '/faq': typeof FaqRoute
   '/features': typeof FeaturesRoute
+  '/free-temporary-email-generator': typeof FreeTemporaryEmailGeneratorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/temp-mail-for-amazon': typeof TempMailForAmazonRoute
+  '/temp-mail-for-instagram': typeof TempMailForInstagramRoute
+  '/temp-mail-for-netflix': typeof TempMailForNetflixRoute
+  '/temp-mail-for-otp': typeof TempMailForOtpRoute
+  '/temp-mail-for-tiktok': typeof TempMailForTiktokRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/use-cases': typeof UseCasesRoute
   '/what-is-temporary-email': typeof WhatIsTemporaryEmailRoute
@@ -110,10 +161,17 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/disposable-email-for-verification': typeof DisposableEmailForVerificationRoute
   '/faq': typeof FaqRoute
   '/features': typeof FeaturesRoute
+  '/free-temporary-email-generator': typeof FreeTemporaryEmailGeneratorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/temp-mail-for-amazon': typeof TempMailForAmazonRoute
+  '/temp-mail-for-instagram': typeof TempMailForInstagramRoute
+  '/temp-mail-for-netflix': typeof TempMailForNetflixRoute
+  '/temp-mail-for-otp': typeof TempMailForOtpRoute
+  '/temp-mail-for-tiktok': typeof TempMailForTiktokRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/use-cases': typeof UseCasesRoute
   '/what-is-temporary-email': typeof WhatIsTemporaryEmailRoute
@@ -126,10 +184,17 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/disposable-email-for-verification': typeof DisposableEmailForVerificationRoute
   '/faq': typeof FaqRoute
   '/features': typeof FeaturesRoute
+  '/free-temporary-email-generator': typeof FreeTemporaryEmailGeneratorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/temp-mail-for-amazon': typeof TempMailForAmazonRoute
+  '/temp-mail-for-instagram': typeof TempMailForInstagramRoute
+  '/temp-mail-for-netflix': typeof TempMailForNetflixRoute
+  '/temp-mail-for-otp': typeof TempMailForOtpRoute
+  '/temp-mail-for-tiktok': typeof TempMailForTiktokRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/use-cases': typeof UseCasesRoute
   '/what-is-temporary-email': typeof WhatIsTemporaryEmailRoute
@@ -143,10 +208,17 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/disclaimer'
+    | '/disposable-email-for-verification'
     | '/faq'
     | '/features'
+    | '/free-temporary-email-generator'
     | '/how-it-works'
     | '/privacy-policy'
+    | '/temp-mail-for-amazon'
+    | '/temp-mail-for-instagram'
+    | '/temp-mail-for-netflix'
+    | '/temp-mail-for-otp'
+    | '/temp-mail-for-tiktok'
     | '/terms-of-service'
     | '/use-cases'
     | '/what-is-temporary-email'
@@ -158,10 +230,17 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/disclaimer'
+    | '/disposable-email-for-verification'
     | '/faq'
     | '/features'
+    | '/free-temporary-email-generator'
     | '/how-it-works'
     | '/privacy-policy'
+    | '/temp-mail-for-amazon'
+    | '/temp-mail-for-instagram'
+    | '/temp-mail-for-netflix'
+    | '/temp-mail-for-otp'
+    | '/temp-mail-for-tiktok'
     | '/terms-of-service'
     | '/use-cases'
     | '/what-is-temporary-email'
@@ -173,10 +252,17 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/disclaimer'
+    | '/disposable-email-for-verification'
     | '/faq'
     | '/features'
+    | '/free-temporary-email-generator'
     | '/how-it-works'
     | '/privacy-policy'
+    | '/temp-mail-for-amazon'
+    | '/temp-mail-for-instagram'
+    | '/temp-mail-for-netflix'
+    | '/temp-mail-for-otp'
+    | '/temp-mail-for-tiktok'
     | '/terms-of-service'
     | '/use-cases'
     | '/what-is-temporary-email'
@@ -189,10 +275,17 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
+  DisposableEmailForVerificationRoute: typeof DisposableEmailForVerificationRoute
   FaqRoute: typeof FaqRoute
   FeaturesRoute: typeof FeaturesRoute
+  FreeTemporaryEmailGeneratorRoute: typeof FreeTemporaryEmailGeneratorRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  TempMailForAmazonRoute: typeof TempMailForAmazonRoute
+  TempMailForInstagramRoute: typeof TempMailForInstagramRoute
+  TempMailForNetflixRoute: typeof TempMailForNetflixRoute
+  TempMailForOtpRoute: typeof TempMailForOtpRoute
+  TempMailForTiktokRoute: typeof TempMailForTiktokRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   UseCasesRoute: typeof UseCasesRoute
   WhatIsTemporaryEmailRoute: typeof WhatIsTemporaryEmailRoute
@@ -221,6 +314,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsOfServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/temp-mail-for-tiktok': {
+      id: '/temp-mail-for-tiktok'
+      path: '/temp-mail-for-tiktok'
+      fullPath: '/temp-mail-for-tiktok'
+      preLoaderRoute: typeof TempMailForTiktokRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp-mail-for-otp': {
+      id: '/temp-mail-for-otp'
+      path: '/temp-mail-for-otp'
+      fullPath: '/temp-mail-for-otp'
+      preLoaderRoute: typeof TempMailForOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp-mail-for-netflix': {
+      id: '/temp-mail-for-netflix'
+      path: '/temp-mail-for-netflix'
+      fullPath: '/temp-mail-for-netflix'
+      preLoaderRoute: typeof TempMailForNetflixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp-mail-for-instagram': {
+      id: '/temp-mail-for-instagram'
+      path: '/temp-mail-for-instagram'
+      fullPath: '/temp-mail-for-instagram'
+      preLoaderRoute: typeof TempMailForInstagramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp-mail-for-amazon': {
+      id: '/temp-mail-for-amazon'
+      path: '/temp-mail-for-amazon'
+      fullPath: '/temp-mail-for-amazon'
+      preLoaderRoute: typeof TempMailForAmazonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy-policy': {
       id: '/privacy-policy'
       path: '/privacy-policy'
@@ -235,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/free-temporary-email-generator': {
+      id: '/free-temporary-email-generator'
+      path: '/free-temporary-email-generator'
+      fullPath: '/free-temporary-email-generator'
+      preLoaderRoute: typeof FreeTemporaryEmailGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
@@ -247,6 +382,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disposable-email-for-verification': {
+      id: '/disposable-email-for-verification'
+      path: '/disposable-email-for-verification'
+      fullPath: '/disposable-email-for-verification'
+      preLoaderRoute: typeof DisposableEmailForVerificationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/disclaimer': {
@@ -310,10 +452,17 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
+  DisposableEmailForVerificationRoute: DisposableEmailForVerificationRoute,
   FaqRoute: FaqRoute,
   FeaturesRoute: FeaturesRoute,
+  FreeTemporaryEmailGeneratorRoute: FreeTemporaryEmailGeneratorRoute,
   HowItWorksRoute: HowItWorksRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  TempMailForAmazonRoute: TempMailForAmazonRoute,
+  TempMailForInstagramRoute: TempMailForInstagramRoute,
+  TempMailForNetflixRoute: TempMailForNetflixRoute,
+  TempMailForOtpRoute: TempMailForOtpRoute,
+  TempMailForTiktokRoute: TempMailForTiktokRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   UseCasesRoute: UseCasesRoute,
   WhatIsTemporaryEmailRoute: WhatIsTemporaryEmailRoute,
