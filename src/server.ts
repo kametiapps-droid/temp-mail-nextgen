@@ -35,32 +35,57 @@ function getCacheControl(pathname: string): string | null {
   return null;
 }
 
-export default {
-  async fetch(request: Request, ...rest: unknown[]): Promise<Response> {
-    const response = await (handler as { fetch: (req: Request, ...r: unknown[]) => Promise<Response> }).fetch(
-      request,
-      ...rest,
-    );
+type Ctx = { waitUntil: (promise: Promise<unknown>) => void };
 
+const tanstackFetch = (
+  handler as { fetch: (req: Request, env: unknown, ctx: Ctx) => Promise<Response> }
+).fetch;
+
+export default {
+  async fetch(request: Request, env: unknown, ctx: Ctx): Promise<Response> {
     const url = new URL(request.url);
     const cacheControl = getCacheControl(url.pathname);
+    const isCacheable = request.method === "GET" && cacheControl !== null;
+
+    const cache = (globalThis as unknown as { caches: { default: Cache } }).caches?.default;
+
+    if (isCacheable && cache) {
+      const cacheKey = new Request(url.toString(), { method: "GET" });
+      const cached = await cache.match(cacheKey);
+      if (cached) {
+        const headers = new Headers(cached.headers);
+        headers.set("X-Cache", "HIT");
+        return new Response(cached.body, {
+          status: cached.status,
+          statusText: cached.statusText,
+          headers,
+        });
+      }
+    }
+
+    const response = await tanstackFetch(request, env, ctx);
     const contentType = response.headers.get("content-type") ?? "";
 
     if (
-      request.method === "GET" &&
-      cacheControl &&
+      isCacheable &&
+      cache &&
       response.status === 200 &&
       contentType.includes("text/html")
     ) {
       const headers = new Headers(response.headers);
-      headers.set("Cache-Control", cacheControl);
-      headers.set("CDN-Cache-Control", cacheControl);
+      headers.set("Cache-Control", cacheControl!);
+      headers.set("CDN-Cache-Control", cacheControl!);
+      headers.set("X-Cache", "MISS");
 
-      return new Response(response.body, {
+      const body = await response.arrayBuffer();
+      const cachedResponse = new Response(body, {
         status: response.status,
         statusText: response.statusText,
         headers,
       });
+      const cacheKey = new Request(url.toString(), { method: "GET" });
+      ctx.waitUntil(cache.put(cacheKey, cachedResponse.clone()));
+      return cachedResponse;
     }
 
     return response;
