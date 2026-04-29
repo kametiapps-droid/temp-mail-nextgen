@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Mail,
@@ -20,9 +20,11 @@ import {
   createEmail,
   deleteEmail,
   DEFAULT_DOMAIN,
+  getBlogPosts,
   getDomains,
   markRead,
   TURNSTILE_SITE_KEY,
+  type BlogPost,
   type InboxMessage,
 } from "../lib/api";
 import {
@@ -368,7 +370,106 @@ function HomePage() {
 
       {/* FAQ */}
       <FAQ />
+
+      {/* Blog */}
+      <BlogPreview />
     </main>
+  );
+}
+
+/* ---------------- Blog Preview ---------------- */
+
+function BlogPreview() {
+  const [posts, setPosts] = useState<BlogPost[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    getBlogPosts()
+      .then((p) => {
+        if (!cancelled) setPosts(p.slice(0, 6));
+      })
+      .catch((e) => {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load posts");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (error) return null;
+  if (posts && posts.length === 0) return null;
+
+  return (
+    <section className="mt-20 sm:mt-24">
+      <div className="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">From the blog</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+            Blog for Temp Email
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
+            Guides, tips, and updates on disposable email, online privacy, and staying spam-free.
+          </p>
+        </div>
+        <Link
+          to="/blog"
+          className="hidden shrink-0 text-sm font-medium text-primary hover:underline sm:inline"
+        >
+          View all posts →
+        </Link>
+      </div>
+
+      {!posts ? (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-72 animate-pulse rounded-2xl border border-border bg-muted/40" />
+          ))}
+        </div>
+      ) : (
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p) => (
+            <li
+              key={p.id}
+              className="group overflow-hidden rounded-2xl border border-border bg-card transition hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <Link to="/blog/$slug" params={{ slug: p.slug }} className="block">
+                {p.cover_image ? (
+                  <img
+                    src={p.cover_image}
+                    alt={p.title}
+                    loading="lazy"
+                    className="h-44 w-full object-cover transition group-hover:scale-[1.02]"
+                  />
+                ) : (
+                  <div className="flex h-44 w-full items-center justify-center bg-gradient-to-br from-primary/10 via-card to-primary/5">
+                    <Mail className="h-10 w-10 text-primary/60" />
+                  </div>
+                )}
+                <div className="p-5">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                    {p.category}
+                  </p>
+                  <h3 className="mt-1 line-clamp-2 text-base font-semibold leading-snug">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{p.excerpt}</p>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {new Date(p.published_at).toLocaleDateString()}
+                  </p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="mt-6 text-center sm:hidden">
+        <Link to="/blog" className="text-sm font-medium text-primary hover:underline">
+          View all posts →
+        </Link>
+      </div>
+    </section>
   );
 }
 

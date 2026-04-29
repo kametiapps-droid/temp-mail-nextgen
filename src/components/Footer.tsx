@@ -10,6 +10,18 @@ const cols = [
     ],
   },
   {
+    title: "Temp Mail For",
+    links: [
+      { to: "/free-temporary-email-generator", label: "Free email generator" },
+      { to: "/disposable-email-for-verification", label: "Verification" },
+      { to: "/temp-mail-for-otp", label: "OTP" },
+      { to: "/temp-mail-for-instagram", label: "Instagram" },
+      { to: "/temp-mail-for-netflix", label: "Netflix" },
+      { to: "/temp-mail-for-amazon", label: "Amazon" },
+      { to: "/temp-mail-for-tiktok", label: "TikTok" },
+    ],
+  },
+  {
     title: "Resources",
     links: [
       { to: "/blog", label: "Blog" },
@@ -22,11 +34,6 @@ const cols = [
     links: [
       { to: "/about", label: "About" },
       { to: "/contact", label: "Contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
       { to: "/privacy-policy", label: "Privacy" },
       { to: "/terms-of-service", label: "Terms" },
       { to: "/disclaimer", label: "Disclaimer" },
