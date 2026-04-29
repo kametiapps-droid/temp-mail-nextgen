@@ -2,16 +2,59 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "../components/PageShell";
 import { getBlogPost, getRelatedPosts, type BlogPost } from "../lib/api";
+import { seo, SITE_NAME, SITE_URL } from "../lib/seo";
 
 export const Route = createFileRoute("/blog/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug.replace(/-/g, " ")} — MyTempMail Blog` },
-      { name: "description", content: `Read about ${params.slug.replace(/-/g, " ")} on MyTempMail.` },
-      { property: "og:title", content: params.slug.replace(/-/g, " ") },
-      { property: "og:type", content: "article" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    try {
+      const post = await getBlogPost(params.slug);
+      return { post, notFound: false as const };
+    } catch {
+      return { post: null, notFound: true as const };
+    }
+  },
+  head: ({ loaderData, params }) => {
+    const post = loaderData?.post;
+    if (!post) {
+      return seo({
+        path: `/blog/${params.slug}`,
+        title: "Post not found — MyTempMail Blog",
+        description: "The blog post you're looking for could not be found.",
+        noIndex: true,
+      });
+    }
+    const articleLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      description: post.excerpt,
+      image: post.cover_image ? [post.cover_image] : undefined,
+      datePublished: post.published_at,
+      dateModified: post.published_at,
+      author: { "@type": "Organization", name: SITE_NAME },
+      publisher: {
+        "@type": "Organization",
+        name: SITE_NAME,
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.svg` },
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/blog/${post.slug}`,
+      },
+      articleSection: post.category,
+    };
+    return seo({
+      path: `/blog/${post.slug}`,
+      title: `${post.title} | MyTempMail Blog`,
+      description: post.excerpt,
+      ogType: "article",
+      ogImage: post.cover_image || undefined,
+      publishedTime: post.published_at,
+      modifiedTime: post.published_at,
+      author: SITE_NAME,
+      jsonLd: articleLd,
+    });
+  },
   component: BlogPostPage,
 });
 
@@ -33,22 +76,32 @@ function renderMarkdown(md: string) {
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const loaderData = Route.useLoaderData();
+  const initialPost = loaderData?.post ?? null;
+  const initialNotFound = loaderData?.notFound ?? false;
+
+  const [post, setPost] = useState<BlogPost | null>(initialPost);
   const [related, setRelated] = useState<BlogPost[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(initialNotFound ? "Post not found" : null);
 
   useEffect(() => {
+    let cancelled = false;
+    getRelatedPosts(slug)
+      .then((r) => { if (!cancelled) setRelated(r); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  useEffect(() => {
+    if (initialPost && initialPost.slug === slug) return;
     let cancelled = false;
     setPost(null);
     setError(null);
     getBlogPost(slug)
       .then((p) => { if (!cancelled) setPost(p); })
       .catch((e) => { if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load post"); });
-    getRelatedPosts(slug)
-      .then((r) => { if (!cancelled) setRelated(r); })
-      .catch(() => {});
     return () => { cancelled = true; };
-  }, [slug]);
+  }, [slug, initialPost]);
 
   if (error) {
     return (

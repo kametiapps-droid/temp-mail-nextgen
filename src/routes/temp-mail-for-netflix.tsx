@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { Tv, Clock, ShieldCheck, EyeOff, Zap, Trash2 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/temp-mail-for-netflix")({
-  head: () => ({
-    meta: [
-      { title: "Temp Mail for Netflix — Sign Up & Try Free Trials Anonymously | MyTempMail" },
-      { name: "description", content: "Use a free temp mail to sign up for Netflix without giving away your real email. Perfect for free trials, demo accounts and avoiding promo spam." },
-      { name: "keywords", content: "temp mail for netflix, netflix temp email, fake email for netflix, netflix free trial email, disposable email netflix" },
-      { property: "og:title", content: "Temp Mail for Netflix — MyTempMail" },
-      { property: "og:description", content: "Sign up for Netflix with a disposable email — keep your real inbox private." },
-    ],
+  head: () => seo({
+    path: "/temp-mail-for-netflix",
+    title: "Temp Mail for Netflix — Sign Up & Try Free Trials Anonymously | MyTempMail",
+    description: "Use a free temp mail to sign up for Netflix without giving away your real email. Perfect for free trials, demo accounts and avoiding promo spam.",
+    keywords: "temp mail for netflix, netflix temp email, fake email for netflix, netflix free trial email, disposable email netflix",
   }),
   component: NetflixTempMailPage,
 });

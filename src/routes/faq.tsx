@@ -2,18 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-
-export const Route = createFileRoute("/faq")({
-  head: () => ({
-    meta: [
-      { title: "FAQ — MyTempMail" },
-      { name: "description", content: "Frequently asked questions about disposable email and MyTempMail — pricing, privacy, attachments, custom names and more." },
-      { property: "og:title", content: "FAQ — MyTempMail" },
-      { property: "og:description", content: "Answers to the most common questions about disposable email." },
-    ],
-  }),
-  component: FAQPage,
-});
+import { seo } from "../lib/seo";
 
 const groups: { title: string; items: { q: string; a: string }[] }[] = [
   {
@@ -93,6 +82,28 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     ],
   },
 ];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: groups.flatMap((g) =>
+    g.items.map((it) => ({
+      "@type": "Question",
+      name: it.q,
+      acceptedAnswer: { "@type": "Answer", text: it.a },
+    })),
+  ),
+};
+
+export const Route = createFileRoute("/faq")({
+  head: () => seo({
+    path: "/faq",
+    title: "FAQ — MyTempMail",
+    description: "Frequently asked questions about disposable email and MyTempMail — pricing, privacy, attachments, custom names and more.",
+    jsonLd: faqJsonLd,
+  }),
+  component: FAQPage,
+});
 
 function FAQPage() {
   return (

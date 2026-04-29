@@ -4,6 +4,28 @@ import appCss from "../styles.css?url";
 import "../lib/i18n";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "../lib/seo";
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon.svg`,
+  sameAs: [] as string[],
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/blog?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
 
 function NotFoundComponent() {
   return (
@@ -29,19 +51,25 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MyTempMail — Free Disposable Temporary Email" },
-      { name: "description", content: "Get a free, instant, disposable email address. No signup. Avoid spam and protect your real inbox." },
-      { name: "author", content: "MyTempMail" },
-      { property: "og:title", content: "MyTempMail — Free Disposable Temporary Email" },
-      { property: "og:description", content: "Free, instant, disposable email. No signup. Avoid spam." },
-      { property: "og:type", content: "website" },
+      { name: "theme-color", content: "#0a0a0a" },
+      { name: "author", content: SITE_NAME },
+      { name: "robots", content: "index, follow" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(organizationLd) },
+      { type: "application/ld+json", children: JSON.stringify(websiteLd) },
     ],
   }),
   shellComponent: RootShell,

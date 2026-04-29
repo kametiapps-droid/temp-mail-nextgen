@@ -1,15 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { MousePointerClick, Inbox, Mail, Trash2 } from "lucide-react";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/how-it-works")({
-  head: () => ({
-    meta: [
-      { title: "How it works — MyTempMail" },
-      { name: "description", content: "How MyTempMail generates a disposable inbox in one click and keeps your real email private." },
-      { property: "og:title", content: "How it works — MyTempMail" },
-      { property: "og:description", content: "Four simple steps from one click to a working disposable inbox." },
-    ],
+  head: () => seo({
+    path: "/how-it-works",
+    title: "How it works — MyTempMail",
+    description: "How MyTempMail generates a disposable inbox in one click and keeps your real email private. Four simple steps from one click to a working disposable inbox.",
   }),
   component: HowItWorksPage,
 });

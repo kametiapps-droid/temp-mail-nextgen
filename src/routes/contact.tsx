@@ -1,15 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { Mail, MessageSquare, Bug, Lightbulb } from "lucide-react";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — MyTempMail" },
-      { name: "description", content: "Get in touch with the MyTempMail team — feedback, bug reports, partnership ideas, or just a hello." },
-      { property: "og:title", content: "Contact — MyTempMail" },
-      { property: "og:description", content: "Get in touch with the MyTempMail team." },
-    ],
+  head: () => seo({
+    path: "/contact",
+    title: "Contact — MyTempMail",
+    description: "Get in touch with the MyTempMail team — feedback, bug reports, partnership ideas, or just a hello.",
   }),
   component: ContactPage,
 });

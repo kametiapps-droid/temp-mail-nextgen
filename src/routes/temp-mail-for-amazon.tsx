@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { ShoppingBag, Receipt, ShieldCheck, EyeOff, Zap, Trash2 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/temp-mail-for-amazon")({
-  head: () => ({
-    meta: [
-      { title: "Temp Mail for Amazon — Sign Up & Receive Verification Codes | MyTempMail" },
-      { name: "description", content: "Use a free temp mail to sign up for Amazon, claim a free trial, or receive a one-time order receipt without exposing your real inbox." },
-      { name: "keywords", content: "temp mail for amazon, amazon temp email, fake email for amazon, disposable email amazon, amazon prime trial email" },
-      { property: "og:title", content: "Temp Mail for Amazon — MyTempMail" },
-      { property: "og:description", content: "Sign up for Amazon with a disposable email — keep your real inbox spam-free." },
-    ],
+  head: () => seo({
+    path: "/temp-mail-for-amazon",
+    title: "Temp Mail for Amazon — Sign Up & Receive Verification Codes | MyTempMail",
+    description: "Use a free temp mail to sign up for Amazon, claim a free trial, or receive a one-time order receipt without exposing your real inbox.",
+    keywords: "temp mail for amazon, amazon temp email, fake email for amazon, disposable email amazon, amazon prime trial email",
   }),
   component: AmazonTempMailPage,
 });

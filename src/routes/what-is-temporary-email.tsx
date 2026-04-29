@@ -1,14 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/what-is-temporary-email")({
-  head: () => ({
-    meta: [
-      { title: "What is Temporary Email? — Complete Guide | MyTempMail" },
-      { name: "description", content: "A complete guide to temporary, disposable, and throwaway email addresses. Learn how they work, why they matter, and when to use them." },
-      { property: "og:title", content: "What is Temporary Email? — Complete Guide" },
-      { property: "og:description", content: "Learn how disposable email works and why it matters for your privacy." },
-    ],
+  head: () => seo({
+    path: "/what-is-temporary-email",
+    title: "What is Temporary Email? — Complete Guide | MyTempMail",
+    description: "A complete guide to temporary, disposable, and throwaway email addresses. Learn how they work, why they matter, and when to use them.",
+    keywords: "what is temporary email, disposable email guide, throwaway email, temp mail explained, fake email, anonymous email",
   }),
   component: WhatIsTempEmailPage,
 });

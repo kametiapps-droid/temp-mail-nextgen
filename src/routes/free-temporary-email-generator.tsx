@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { Zap, ShieldCheck, Wand2, Trash2, Globe2, Lock } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/free-temporary-email-generator")({
-  head: () => ({
-    meta: [
-      { title: "Free Temporary Email Generator — Instant Disposable Inbox | MyTempMail" },
-      { name: "description", content: "Generate a free temporary email address instantly. No signup, no app, no spam. Pick a custom name and domain — your inbox is ready in one click." },
-      { name: "keywords", content: "free temporary email, temp mail generator, disposable email, throwaway email, free temp mail, instant email" },
-      { property: "og:title", content: "Free Temporary Email Generator — MyTempMail" },
-      { property: "og:description", content: "Free, instant, disposable email — generate your inbox in one click." },
-    ],
+  head: () => seo({
+    path: "/free-temporary-email-generator",
+    title: "Free Temporary Email Generator — Instant Disposable Inbox | MyTempMail",
+    description: "Generate a free temporary email address instantly. No signup, no app, no spam. Pick a custom name and domain — your inbox is ready in one click.",
+    keywords: "free temporary email, temp mail generator, disposable email, throwaway email, free temp mail, instant email",
   }),
   component: FreeTempEmailGeneratorPage,
 });

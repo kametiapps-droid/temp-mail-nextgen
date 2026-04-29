@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { KeyRound, Zap, ShieldCheck, Smartphone, Clock, EyeOff } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/temp-mail-for-otp")({
-  head: () => ({
-    meta: [
-      { title: "Temp Mail for OTP — Receive One-Time Passwords Instantly | MyTempMail" },
-      { name: "description", content: "Get a free temp mail to receive OTPs and one-time verification codes in real time. No signup, no spam — perfect for any account that asks for an email OTP." },
-      { name: "keywords", content: "temp mail for otp, temp email otp, otp email, one time password email, disposable email otp, fake email for otp" },
-      { property: "og:title", content: "Temp Mail for OTP — MyTempMail" },
-      { property: "og:description", content: "Receive one-time passwords on a free disposable inbox — instant, no signup." },
-    ],
+  head: () => seo({
+    path: "/temp-mail-for-otp",
+    title: "Temp Mail for OTP — Receive One-Time Passwords Instantly | MyTempMail",
+    description: "Get a free temp mail to receive OTPs and one-time verification codes in real time. No signup, no spam — perfect for any account that asks for an email OTP.",
+    keywords: "temp mail for otp, temp email otp, otp email, one time password email, disposable email otp, fake email for otp",
   }),
   component: OTPPage,
 });

@@ -1,14 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/privacy-policy")({
-  head: () => ({
-    meta: [
-      { title: "Privacy Policy — MyTempMail" },
-      { name: "description", content: "How MyTempMail handles your data — short version: we collect almost none and we don't sell what we have." },
-      { property: "og:title", content: "Privacy Policy — MyTempMail" },
-      { property: "og:description", content: "Our privacy commitments, in plain English." },
-    ],
+  head: () => seo({
+    path: "/privacy-policy",
+    title: "Privacy Policy — MyTempMail",
+    description: "How MyTempMail handles your data — short version: we collect almost none and we don't sell what we have.",
   }),
   component: PrivacyPage,
 });

@@ -12,14 +12,13 @@ import {
   Infinity as InfinityIcon,
 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/features")({
-  head: () => ({
-    meta: [
-      { title: "Features — MyTempMail" },
-      { name: "description", content: "Real-time inbox, custom names, multiple domains, cross-tab sync, and zero tracking." },
-      { property: "og:title", content: "Features — MyTempMail" },
-      { property: "og:description", content: "Everything that makes MyTempMail the cleanest disposable email service." },
-    ],
+  head: () => seo({
+    path: "/features",
+    title: "Features — MyTempMail",
+    description: "Real-time inbox, custom names, multiple domains, cross-tab sync, and zero tracking. Everything that makes MyTempMail the cleanest disposable email service.",
   }),
   component: FeaturesPage,
 });

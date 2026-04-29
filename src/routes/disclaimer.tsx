@@ -1,14 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/disclaimer")({
-  head: () => ({
-    meta: [
-      { title: "Disclaimer — MyTempMail" },
-      { name: "description", content: "Important things to keep in mind about using MyTempMail's disposable email service." },
-      { property: "og:title", content: "Disclaimer — MyTempMail" },
-      { property: "og:description", content: "Important things to keep in mind about MyTempMail." },
-    ],
+  head: () => seo({
+    path: "/disclaimer",
+    title: "Disclaimer — MyTempMail",
+    description: "Important things to keep in mind about using MyTempMail's disposable email service.",
   }),
   component: DisclaimerPage,
 });

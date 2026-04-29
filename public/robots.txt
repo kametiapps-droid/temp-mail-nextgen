@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Block AI scrapers that don't add value
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://mytempmail.pro/sitemap.xml

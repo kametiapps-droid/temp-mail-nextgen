@@ -2,15 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "../components/PageShell";
 import { getBlogPosts, type BlogPost } from "../lib/api";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/blog/")({
-  head: () => ({
-    meta: [
-      { title: "Blog — MyTempMail" },
-      { name: "description", content: "Articles, tips, and updates on email privacy and disposable email." },
-      { property: "og:title", content: "Blog — MyTempMail" },
-      { property: "og:description", content: "Articles, tips, and updates on email privacy." },
-    ],
+  head: () => seo({
+    path: "/blog",
+    title: "Blog — Privacy & Disposable Email Tips | MyTempMail",
+    description: "Articles, tips, and updates on email privacy, disposable email, OTP verification, and protecting your real inbox from spam.",
   }),
   component: BlogIndex,
 });

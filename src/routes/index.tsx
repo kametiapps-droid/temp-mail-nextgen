@@ -37,14 +37,28 @@ import {
   useInboxStream,
 } from "../lib/email-store";
 
+import { seo, SITE_NAME, SITE_URL } from "../lib/seo";
+
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: SITE_NAME,
+  url: SITE_URL,
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript and a modern browser.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description:
+    "Free disposable temporary email — instant inbox with custom name and domain. No signup, no spam.",
+};
+
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Free Temporary Email — Instant Disposable Inbox | MyTempMail" },
-      { name: "description", content: "Generate a free disposable email address instantly. Pick a custom name and domain. No registration. Avoid spam and keep your real inbox clean." },
-      { property: "og:title", content: "MyTempMail — Free Disposable Temporary Email" },
-      { property: "og:description", content: "Instant disposable email with custom name & domain. No signup. Free forever." },
-    ],
+  head: () => seo({
+    path: "/",
+    title: "Free Temporary Email — Instant Disposable Inbox | MyTempMail",
+    description: "Generate a free disposable email address instantly. Pick a custom name and domain. No registration. Avoid spam and keep your real inbox clean.",
+    keywords: "temp mail, temporary email, disposable email, fake email, throwaway email, anonymous email, free temp mail, instant email",
+    jsonLd: homeJsonLd,
   }),
   component: HomePage,
 });

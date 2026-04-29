@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { ShieldCheck, KeyRound, Mail, CheckCircle2, Clock, EyeOff } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/disposable-email-for-verification")({
-  head: () => ({
-    meta: [
-      { title: "Disposable Email for Verification — Receive OTP & Confirmation Codes | MyTempMail" },
-      { name: "description", content: "Use a disposable email to receive verification codes, confirmation links, and OTPs without giving away your real address. Free, instant, no signup." },
-      { name: "keywords", content: "disposable email for verification, temp email for verification, email verification, OTP verification, confirmation email, throwaway email" },
-      { property: "og:title", content: "Disposable Email for Verification — MyTempMail" },
-      { property: "og:description", content: "Receive verification codes & confirmation links — without your real email." },
-    ],
+  head: () => seo({
+    path: "/disposable-email-for-verification",
+    title: "Disposable Email for Verification — Receive OTP & Confirmation Codes | MyTempMail",
+    description: "Use a disposable email to receive verification codes, confirmation links, and OTPs without giving away your real address. Free, instant, no signup.",
+    keywords: "disposable email for verification, temp email for verification, email verification, OTP verification, confirmation email, throwaway email",
   }),
   component: VerificationPage,
 });

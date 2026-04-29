@@ -13,14 +13,13 @@ import {
   HeartHandshake,
 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/use-cases")({
-  head: () => ({
-    meta: [
-      { title: "Use Cases — MyTempMail" },
-      { name: "description", content: "When to use a disposable email: signups, downloads, free trials, online forms, public Wi-Fi, and more." },
-      { property: "og:title", content: "Use Cases — MyTempMail" },
-      { property: "og:description", content: "Signups, trials, downloads, forms — keep your real inbox safe." },
-    ],
+  head: () => seo({
+    path: "/use-cases",
+    title: "Use Cases — MyTempMail",
+    description: "When to use a disposable email: signups, downloads, free trials, online forms, public Wi-Fi, and more. Keep your real inbox safe.",
   }),
   component: UseCasesPage,
 });

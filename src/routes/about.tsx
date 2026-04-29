@@ -1,14 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — MyTempMail" },
-      { name: "description", content: "About MyTempMail — our mission, our team, our principles." },
-      { property: "og:title", content: "About — MyTempMail" },
-      { property: "og:description", content: "Why we built a disposable email service." },
-    ],
+  head: () => seo({
+    path: "/about",
+    title: "About — MyTempMail",
+    description: "About MyTempMail — our mission, our team, our principles. Why we built a disposable email service.",
   }),
   component: AboutPage,
 });

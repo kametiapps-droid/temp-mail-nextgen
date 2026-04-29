@@ -1,14 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
+import { seo } from "../lib/seo";
 
 export const Route = createFileRoute("/terms-of-service")({
-  head: () => ({
-    meta: [
-      { title: "Terms of Service — MyTempMail" },
-      { name: "description", content: "The terms that govern your use of MyTempMail — written in plain English." },
-      { property: "og:title", content: "Terms of Service — MyTempMail" },
-      { property: "og:description", content: "The terms that govern your use of MyTempMail." },
-    ],
+  head: () => seo({
+    path: "/terms-of-service",
+    title: "Terms of Service — MyTempMail",
+    description: "The terms that govern your use of MyTempMail — written in plain English.",
   }),
   component: TermsPage,
 });

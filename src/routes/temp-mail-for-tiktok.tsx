@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { Music, ShieldCheck, EyeOff, UserX, Zap, Trash2 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/temp-mail-for-tiktok")({
-  head: () => ({
-    meta: [
-      { title: "Temp Mail for TikTok — Create Anonymous TikTok Accounts | MyTempMail" },
-      { name: "description", content: "Use a free temp mail to sign up for TikTok without exposing your real email. Perfect for second accounts, niche profiles, and staying anonymous." },
-      { name: "keywords", content: "temp mail for tiktok, tiktok temp email, fake email for tiktok, anonymous tiktok account, disposable email tiktok" },
-      { property: "og:title", content: "Temp Mail for TikTok — MyTempMail" },
-      { property: "og:description", content: "Sign up for TikTok with a disposable email — keep your real inbox private." },
-    ],
+  head: () => seo({
+    path: "/temp-mail-for-tiktok",
+    title: "Temp Mail for TikTok — Create Anonymous TikTok Accounts | MyTempMail",
+    description: "Use a free temp mail to sign up for TikTok without exposing your real email. Perfect for second accounts, niche profiles, and staying anonymous.",
+    keywords: "temp mail for tiktok, tiktok temp email, fake email for tiktok, anonymous tiktok account, disposable email tiktok",
   }),
   component: TikTokTempMailPage,
 });

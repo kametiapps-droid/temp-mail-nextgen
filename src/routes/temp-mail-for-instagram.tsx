@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "../components/PageShell";
 import { Instagram, ShieldCheck, EyeOff, UserX, Zap, Trash2 } from "lucide-react";
 
+import { seo } from "../lib/seo";
+
 export const Route = createFileRoute("/temp-mail-for-instagram")({
-  head: () => ({
-    meta: [
-      { title: "Temp Mail for Instagram — Create Anonymous Instagram Accounts | MyTempMail" },
-      { name: "description", content: "Use a free temp mail to sign up for Instagram without giving away your real email. Perfect for second accounts, testing, and staying anonymous." },
-      { name: "keywords", content: "temp mail for instagram, instagram temp email, fake email for instagram, anonymous instagram account, disposable email instagram" },
-      { property: "og:title", content: "Temp Mail for Instagram — MyTempMail" },
-      { property: "og:description", content: "Sign up for Instagram with a disposable email — keep your real inbox private." },
-    ],
+  head: () => seo({
+    path: "/temp-mail-for-instagram",
+    title: "Temp Mail for Instagram — Create Anonymous Instagram Accounts | MyTempMail",
+    description: "Use a free temp mail to sign up for Instagram without giving away your real email. Perfect for second accounts, testing, and staying anonymous.",
+    keywords: "temp mail for instagram, instagram temp email, fake email for instagram, anonymous instagram account, disposable email instagram",
   }),
   component: InstagramTempMailPage,
 });
