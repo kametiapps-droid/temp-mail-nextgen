@@ -47,15 +47,15 @@ export function Footer() {
 
   return (
     <footer className="mt-24 border-t border-border/60 bg-muted/30">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 md:grid-cols-5">
-        <div className="md:col-span-1">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-12 md:grid-cols-5 md:gap-10">
+        <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-2 font-display text-lg font-semibold">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
               <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="2.5"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
             </span>
             MyTempMail
           </div>
-          <p className="mt-3 text-sm text-muted-foreground">{t("footer.tagline")}</p>
+          <p className="mt-3 max-w-md text-sm text-muted-foreground">{t("footer.tagline")}</p>
         </div>
         {cols.map((c) => (
           <div key={c.title}>
