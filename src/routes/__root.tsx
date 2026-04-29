@@ -1,6 +1,7 @@
 import { Outlet, createRootRoute, HeadContent, Scripts, Link } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import "../lib/i18n";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
@@ -48,11 +49,11 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
-const themeInitScript = `(()=>{try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+const themeInitScript = `(()=>{try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}var rtl={ar:1,fa:1};var l=localStorage.getItem('lang')||'en';document.documentElement.setAttribute('lang',l);document.documentElement.setAttribute('dir',rtl[l]?'rtl':'ltr');}catch(e){}})();`;
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

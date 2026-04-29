@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "features": "功能",
+    "howItWorks": "工作原理",
+    "useCases": "使用场景",
+    "blog": "博客",
+    "faq": "常见问题"
+  },
+  "footer": {
+    "tagline": "免费、一次性的电子邮件地址。无需注册，无垃圾邮件。",
+    "rights": "版权所有。",
+    "madeFor": "为隐私而生。",
+    "groups": {
+      "product": "产品",
+      "tempMailFor": "临时邮箱适用",
+      "resources": "资源",
+      "company": "公司"
+    },
+    "links": {
+      "features": "功能",
+      "howItWorks": "工作原理",
+      "useCases": "使用场景",
+      "freeGenerator": "免费邮箱生成器",
+      "verification": "验证",
+      "otp": "OTP",
+      "instagram": "Instagram",
+      "netflix": "Netflix",
+      "amazon": "亚马逊",
+      "tiktok": "TikTok",
+      "blog": "博客",
+      "faq": "常见问题",
+      "whatIs": "什么是临时邮箱？",
+      "about": "关于我们",
+      "contact": "联系我们",
+      "privacy": "隐私",
+      "terms": "条款",
+      "disclaimer": "免责声明"
+    }
+  },
+  "hero": {
+    "badge": "实时 · 无需注册 · 免费邮件服务",
+    "title": "免费临时邮件服务",
+    "subtitle": "即时临时邮箱，无需注册。生成一个免费的临时邮箱，帮助您保护隐私和邮箱免受垃圾邮件骚扰。"
+  },
+  "emailCard": {
+    "copy": "复制",
+    "copied": "已复制！",
+    "delete": "删除",
+    "expiresIn": "剩余",
+    "liveInbox": "实时收件箱",
+    "syncedTabs": "在所有标签页同步",
+    "noEmail": "尚无邮箱。",
+    "generate": "生成随机邮箱",
+    "generating": "生成中…",
+    "custom": "自定义邮箱",
+    "cancelCustom": "取消自定义",
+    "customAddress": "自定义地址",
+    "namePlaceholder": "你的名字",
+    "validationHint": "a–z、0–9、点、下划线、连字符 · 1–32 个字符",
+    "create": "创建",
+    "creating": "创建中…",
+    "deleteConfirm": "删除此邮箱及其所有消息？此操作无法撤销。"
+  },
+  "inbox": {
+    "title": "收件箱",
+    "messageOne": "{{count}} 条消息",
+    "messageOther": "{{count}} 条消息",
+    "waiting": "等待消息中…",
+    "selectMessage": "选择一条消息阅读。",
+    "from": "来自",
+    "empty": "（空）"
+  },
+  "whatIs": {
+    "eyebrow": "基础知识",
+    "title": "什么是临时邮箱？",
+    "subtitle": "一个免费、匿名的收件箱，一键生成 — 当你不想给出真实地址时的完美选择。",
+    "points": {
+      "p1Title": "不会跟着你回家的收件箱",
+      "p1Text": "临时邮箱（也叫一次性邮箱、抛弃式邮箱、burner、10 分钟邮箱）是一个真实可用的电子邮件地址，存在很短时间后就会与所有收到的邮件一起消失。",
+      "p2Title": "为一次性注册而设计",
+      "p2Text": "当一个网站只为发送验证链接、下载文件或优惠券而要求你的邮箱时，请使用它 — 而不是把你的收件箱永远交给它。",
+      "p3Title": "你的真实地址保持私密",
+      "p3Text": "无个人数据、无账户、无密码。垃圾邮件发送者、数据经销商和数据泄露列表永远看不到你的真实邮箱。",
+      "p4Title": "自动删除，无需清理",
+      "p4Text": "倒计时结束时，地址和其中的每一条消息都会被清除 — 不留任何痕迹。"
+    }
+  },
+  "useCases": {
+    "eyebrow": "使用场景",
+    "title": "临时邮箱拯救你的时刻",
+    "subtitle": "任何网站只为让你 \"开始使用\" 而要求邮箱的地方 — 都是使用一次性地址的完美时机。",
+    "items": {
+      "downloadsTitle": "免费下载和电子书",
+      "downloadsText": "获取那份 PDF、白皮书或模板，无需终身订阅一份邮件通讯。",
+      "trialsTitle": "免费试用和演示",
+      "trialsText": "试用一个 SaaS 应用或流媒体服务，无需提心吊胆记得在扣费前取消。",
+      "shoppingTitle": "一次性在线购物",
+      "shoppingText": "从一家不再使用的店铺购买 — 没有后续促销邮件，没有购物车遗弃焦虑。",
+      "paywallTitle": "阅读付费墙文章",
+      "paywallText": "绕过 \"注册以继续阅读\" 的墙，无需交出你的收件箱。",
+      "gameTitle": "游戏和论坛注册",
+      "gameText": "玩耍、评论、发帖 — 不让你的真实地址明年出现在泄露的数据库中。",
+      "anonTitle": "保持匿名",
+      "anonText": "注册问卷、Beta 测试、抽奖和比赛，零个人痕迹。",
+      "testTitle": "测试你自己的产品",
+      "testText": "开发者和 QA：生成全新收件箱来测试注册流程、密码重置和邮件。",
+      "breachTitle": "防范数据泄露",
+      "breachText": "如果你使用过的网站被黑，你的真实邮箱永远不会出现在任何泄露列表中。"
+    }
+  },
+  "faq": {
+    "eyebrow": "常见问题",
+    "title": "常见问题解答",
+    "subtitle": "关于一次性邮箱以及 MyTempMail 如何让你的收件箱保持清洁，你想知道的一切。",
+    "items": {
+      "freeQ": "MyTempMail 真的免费吗？",
+      "freeA": "是的 — 100% 免费，永远免费。无需注册、无需信用卡、没有隐藏的 \"专业版\" 升级。我们不出售你的数据，因为我们根本不收集。",
+      "lastQ": "邮箱地址能用多久？",
+      "lastA": "每个地址都有一个有限的有效期（在你的邮箱旁边显示为 \"剩余…\"）。一旦过期，地址和所有邮件都会自动删除。",
+      "attachQ": "我可以接收附件吗？",
+      "attachA": "可以。大多数常见附件类型 — PDF、图片、文档 — 都会像普通收件箱一样在消息视图中接收并显示。",
+      "sendQ": "我可以从临时地址发送邮件吗？",
+      "sendA": "不可以。MyTempMail 在设计上仅支持接收。这让服务保持快速、防滥用，并且无法被用来发送垃圾邮件。",
+      "regQ": "我需要注册或安装任何东西吗？",
+      "regA": "不需要。打开页面，点击生成，一秒内就有可用的收件箱。无需安装。",
+      "safeQ": "它安全且私密吗？",
+      "safeA": "是的。我们不询问你的姓名、电话或真实邮箱，也不跟踪谁拥有哪个收件箱。过期后一切被清除 — 没有任何东西可被泄露。",
+      "customQ": "我可以选择自己的邮箱名和域名吗？",
+      "customA": "当然可以。点击 \"自定义邮箱\"，选择 @ 之前的部分，并从列表中挑选域名。",
+      "acceptQ": "网站会接受临时邮箱吗？",
+      "acceptA": "绝大多数会接受。一些银行、政府网站和少数主要平台会屏蔽一次性地址 — 其他几乎所有网站都能完美使用。"
+    },
+    "stillTitle": "还有问题吗？",
+    "stillText": "我们尽量保持简单。如果有什么不清楚的，欢迎告诉我们。",
+    "contactCta": "联系我们"
+  },
+  "blogPreview": {
+    "eyebrow": "来自博客",
+    "title": "临时邮箱博客",
+    "subtitle": "关于一次性邮箱、在线隐私以及远离垃圾邮件的指南、技巧和更新。",
+    "viewAll": "查看全部文章 →"
+  },
+  "language": {
+    "label": "语言"
+  }
+}

@@ -1,17 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ThemeToggle } from "./ThemeToggle";
-
-const nav = [
-  { to: "/features", label: "Features" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/use-cases", label: "Use cases" },
-  { to: "/blog", label: "Blog" },
-  { to: "/faq", label: "FAQ" },
-];
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+
+  const nav = [
+    { to: "/features", label: t("nav.features") },
+    { to: "/how-it-works", label: t("nav.howItWorks") },
+    { to: "/use-cases", label: t("nav.useCases") },
+    { to: "/blog", label: t("nav.blog") },
+    { to: "/faq", label: t("nav.faq") },
+  ];
 
   useEffect(() => {
     if (!open) return;
@@ -44,11 +47,13 @@ export function Header() {
               {n.label}
             </Link>
           ))}
-          <div className="ml-2">
+          <div className="ml-2 flex items-center gap-2">
+            <LanguageSwitcher />
             <ThemeToggle />
           </div>
         </nav>
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <button
             onClick={() => setOpen(!open)}

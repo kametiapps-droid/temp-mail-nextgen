@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Mail,
   ShieldCheck,
@@ -106,6 +107,7 @@ function useTurnstileToken(active: boolean) {
 }
 
 function HomePage() {
+  const { t } = useTranslation();
   const { email, inbox } = useEmailStore();
   useInboxStream();
 
@@ -168,11 +170,11 @@ function HomePage() {
 
   const remove = useCallback(async () => {
     if (!email) return;
-    if (!confirm("Delete this email and all its messages? This cannot be undone.")) return;
+    if (!confirm(t("emailCard.deleteConfirm"))) return;
     try { await deleteEmail(email.id); } catch {}
     clearEmail();
     setSelectedId(null);
-  }, [email]);
+  }, [email, t]);
 
   const open = useCallback(async (msg: InboxMessage) => {
     setSelectedId(msg.id);
@@ -199,13 +201,13 @@ function HomePage() {
       {/* Hero */}
       <section className="text-center">
         <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">
-          <span className="h-1.5 w-1.5 rounded-full bg-success" /> Real-time · No signup · Free Email Service
+          <span className="h-1.5 w-1.5 rounded-full bg-success" /> {t("hero.badge")}
         </p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-          Free Temporary<br className="hidden sm:block" /> Email Service
+          {t("hero.title")}
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          Instant Temp Email, No sign-up. Generate a free temporary email that helps to protect your privacy and inbox from spam.
+          {t("hero.subtitle")}
         </p>
       </section>
 
@@ -223,23 +225,23 @@ function HomePage() {
                     onClick={copy}
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
                   >
-                    {copied ? "Copied!" : "Copy"}
+                    {copied ? t("emailCard.copied") : t("emailCard.copy")}
                   </button>
                   <button
                     onClick={remove}
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium hover:bg-destructive hover:text-destructive-foreground"
                   >
-                    Delete
+                    {t("emailCard.delete")}
                   </button>
                 </div>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Expires in <span className="font-medium text-foreground">{expiresIn}</span> · Live inbox · Synced across all your tabs
+                {t("emailCard.expiresIn")} <span className="font-medium text-foreground">{expiresIn}</span> · {t("emailCard.liveInbox")} · {t("emailCard.syncedTabs")}
               </p>
             </>
           ) : (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
-              <p className="text-sm text-muted-foreground">No email yet.</p>
+              <p className="text-sm text-muted-foreground">{t("emailCard.noEmail")}</p>
               {TURNSTILE_SITE_KEY && <div ref={tsRef} />}
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <button
@@ -247,26 +249,26 @@ function HomePage() {
                   disabled={loading}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
                 >
-                  {loading ? "Generating…" : "Generate random"}
+                  {loading ? t("emailCard.generating") : t("emailCard.generate")}
                 </button>
                 <button
                   onClick={() => setCustomOpen((v) => !v)}
                   disabled={loading}
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-medium hover:bg-accent disabled:opacity-50"
                 >
-                  {customOpen ? "Cancel custom" : "Custom email"}
+                  {customOpen ? t("emailCard.cancelCustom") : t("emailCard.custom")}
                 </button>
               </div>
 
               {customOpen && (
                 <div className="mt-2 w-full max-w-xl rounded-xl border border-border bg-background p-4 text-left">
-                  <label className="text-xs font-medium text-muted-foreground">Custom address</label>
+                  <label className="text-xs font-medium text-muted-foreground">{t("emailCard.customAddress")}</label>
                   <div className="mt-2 flex flex-col items-stretch gap-2 sm:flex-row">
                     <input
                       autoFocus
                       value={customLocal}
                       onChange={(e) => setCustomLocal(e.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))}
-                      placeholder="your-name"
+                      placeholder={t("emailCard.namePlaceholder")}
                       maxLength={32}
                       className="flex-1 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
                     />
@@ -282,14 +284,14 @@ function HomePage() {
                     </select>
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    a–z, 0–9, dot, underscore, hyphen · 1–32 chars
+                    {t("emailCard.validationHint")}
                   </p>
                   <button
                     onClick={() => create({ localPart: customLocal, domain: customDomain })}
                     disabled={loading || !validLocal}
                     className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-40 sm:w-auto"
                   >
-                    {loading ? "Creating…" : `Create ${customLocal || "name"}@${customDomain}`}
+                    {loading ? t("emailCard.creating") : `${t("emailCard.create")} ${customLocal || t("emailCard.namePlaceholder")}@${customDomain}`}
                   </button>
                 </div>
               )}
@@ -306,13 +308,15 @@ function HomePage() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
           <div className="rounded-2xl border border-border bg-card">
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <h2 className="text-sm font-semibold">Inbox</h2>
-              <span className="text-xs text-muted-foreground">{inbox.length} message{inbox.length !== 1 ? "s" : ""}</span>
+              <h2 className="text-sm font-semibold">{t("inbox.title")}</h2>
+              <span className="text-xs text-muted-foreground">
+                {t(inbox.length === 1 ? "inbox.messageOne" : "inbox.messageOther", { count: inbox.length })}
+              </span>
             </div>
             <ul className="max-h-[520px] divide-y divide-border overflow-y-auto">
               {inbox.length === 0 && (
                 <li className="px-4 py-12 text-center text-sm text-muted-foreground">
-                  Waiting for messages…
+                  {t("inbox.waiting")}
                 </li>
               )}
               {inbox.map((m) => (
@@ -337,7 +341,7 @@ function HomePage() {
                 <header className="border-b border-border px-5 py-4">
                   <h3 className="text-base font-semibold">{selected.subject}</h3>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    From <span className="font-medium text-foreground">{selected.from_name || selected.from_address}</span> · {new Date(selected.received_at).toLocaleString()}
+                    {t("inbox.from")} <span className="font-medium text-foreground">{selected.from_name || selected.from_address}</span> · {new Date(selected.received_at).toLocaleString()}
                   </p>
                 </header>
                 <div className="flex-1 overflow-y-auto p-5">
@@ -349,13 +353,13 @@ function HomePage() {
                       srcDoc={selected.body_html}
                     />
                   ) : (
-                    <pre className="whitespace-pre-wrap font-sans text-sm">{selected.body_text || "(empty)"}</pre>
+                    <pre className="whitespace-pre-wrap font-sans text-sm">{selected.body_text || t("inbox.empty")}</pre>
                   )}
                 </div>
               </article>
             ) : (
               <div className="grid h-full min-h-[320px] place-items-center p-8 text-center">
-                <p className="text-sm text-muted-foreground">Select a message to read it.</p>
+                <p className="text-sm text-muted-foreground">{t("inbox.selectMessage")}</p>
               </div>
             )}
           </div>
@@ -380,6 +384,7 @@ function HomePage() {
 /* ---------------- Blog Preview ---------------- */
 
 function BlogPreview() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState<BlogPost[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -404,19 +409,19 @@ function BlogPreview() {
     <section className="mt-20 sm:mt-24">
       <div className="mb-8 flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">From the blog</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">{t("blogPreview.eyebrow")}</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-            Blog for Temp Email
+            {t("blogPreview.title")}
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Guides, tips, and updates on disposable email, online privacy, and staying spam-free.
+            {t("blogPreview.subtitle")}
           </p>
         </div>
         <Link
           to="/blog"
           className="hidden shrink-0 text-sm font-medium text-primary hover:underline sm:inline"
         >
-          View all posts →
+          {t("blogPreview.viewAll")}
         </Link>
       </div>
 
@@ -466,7 +471,7 @@ function BlogPreview() {
 
       <div className="mt-6 text-center sm:hidden">
         <Link to="/blog" className="text-sm font-medium text-primary hover:underline">
-          View all posts →
+          {t("blogPreview.viewAll")}
         </Link>
       </div>
     </section>
@@ -476,27 +481,12 @@ function BlogPreview() {
 /* ---------------- What is Temporary Email ---------------- */
 
 function WhatIsTempMail() {
+  const { t } = useTranslation();
   const points = [
-    {
-      icon: Mail,
-      title: "An inbox that doesn't follow you home",
-      text: "A temporary email (also called disposable, throwaway, burner, or 10-minute mail) is a real, working email address that lives for a short time and then disappears — along with everything sent to it.",
-    },
-    {
-      icon: EyeOff,
-      title: "Built for one-time signups",
-      text: "Use it whenever a site asks for your email just to send a verification link, a download, or a coupon — without owning your inbox forever.",
-    },
-    {
-      icon: Lock,
-      title: "Your real address stays private",
-      text: "No personal data, no account, no password. Spammers, data brokers and breach lists never see your real email.",
-    },
-    {
-      icon: Trash2,
-      title: "Auto-deleted, no cleanup",
-      text: "When the timer runs out, the address and every message in it are wiped — leaving zero trace behind.",
-    },
+    { icon: Mail, title: t("whatIs.points.p1Title"), text: t("whatIs.points.p1Text") },
+    { icon: EyeOff, title: t("whatIs.points.p2Title"), text: t("whatIs.points.p2Text") },
+    { icon: Lock, title: t("whatIs.points.p3Title"), text: t("whatIs.points.p3Text") },
+    { icon: Trash2, title: t("whatIs.points.p4Title"), text: t("whatIs.points.p4Text") },
   ];
 
   return (
@@ -504,13 +494,13 @@ function WhatIsTempMail() {
       <div className="text-center">
         <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
           <Sparkles className="h-3.5 w-3.5 text-primary" />
-          The basics
+          {t("whatIs.eyebrow")}
         </p>
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          What is a Temporary Email?
+          {t("whatIs.title")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-          A free, anonymous inbox you can spin up in one click — perfect for the moments when you'd rather not hand over your real address.
+          {t("whatIs.subtitle")}
         </p>
       </div>
 
@@ -540,55 +530,16 @@ function WhatIsTempMail() {
 /* ---------------- Use Cases ---------------- */
 
 function UseCases() {
+  const { t } = useTranslation();
   const cases = [
-    {
-      icon: Download,
-      title: "Free downloads & ebooks",
-      text: "Grab that PDF, whitepaper or template without subscribing to a newsletter for life.",
-      color: "from-blue-500/15 to-blue-500/5 text-blue-600 dark:text-blue-400",
-    },
-    {
-      icon: Clock,
-      title: "Free trials & demos",
-      text: "Try a SaaS app or a streaming service without having to remember to cancel before charge day.",
-      color: "from-violet-500/15 to-violet-500/5 text-violet-600 dark:text-violet-400",
-    },
-    {
-      icon: ShoppingBag,
-      title: "One-off online shopping",
-      text: "Buy from a store you'll never use again — no follow-up promo emails, no abandoned cart guilt.",
-      color: "from-pink-500/15 to-pink-500/5 text-pink-600 dark:text-pink-400",
-    },
-    {
-      icon: Newspaper,
-      title: "Read paywalled articles",
-      text: "Get past 'sign up to continue reading' walls without giving up your inbox.",
-      color: "from-amber-500/15 to-amber-500/5 text-amber-600 dark:text-amber-400",
-    },
-    {
-      icon: Gamepad2,
-      title: "Game & forum signups",
-      text: "Play, comment, and post — without your real address ending up on a leaked database next year.",
-      color: "from-emerald-500/15 to-emerald-500/5 text-emerald-600 dark:text-emerald-400",
-    },
-    {
-      icon: UserX,
-      title: "Stay anonymous",
-      text: "Sign up to surveys, beta tests, giveaways and contests with zero personal trail.",
-      color: "from-rose-500/15 to-rose-500/5 text-rose-600 dark:text-rose-400",
-    },
-    {
-      icon: Briefcase,
-      title: "Test your own product",
-      text: "Developers and QA: spin up fresh inboxes to test signup flows, password resets and emails.",
-      color: "from-cyan-500/15 to-cyan-500/5 text-cyan-600 dark:text-cyan-400",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Protect against breaches",
-      text: "If a site you used gets hacked, your real email never appears in any breach list.",
-      color: "from-indigo-500/15 to-indigo-500/5 text-indigo-600 dark:text-indigo-400",
-    },
+    { icon: Download, title: t("useCases.items.downloadsTitle"), text: t("useCases.items.downloadsText"), color: "from-blue-500/15 to-blue-500/5 text-blue-600 dark:text-blue-400" },
+    { icon: Clock, title: t("useCases.items.trialsTitle"), text: t("useCases.items.trialsText"), color: "from-violet-500/15 to-violet-500/5 text-violet-600 dark:text-violet-400" },
+    { icon: ShoppingBag, title: t("useCases.items.shoppingTitle"), text: t("useCases.items.shoppingText"), color: "from-pink-500/15 to-pink-500/5 text-pink-600 dark:text-pink-400" },
+    { icon: Newspaper, title: t("useCases.items.paywallTitle"), text: t("useCases.items.paywallText"), color: "from-amber-500/15 to-amber-500/5 text-amber-600 dark:text-amber-400" },
+    { icon: Gamepad2, title: t("useCases.items.gameTitle"), text: t("useCases.items.gameText"), color: "from-emerald-500/15 to-emerald-500/5 text-emerald-600 dark:text-emerald-400" },
+    { icon: UserX, title: t("useCases.items.anonTitle"), text: t("useCases.items.anonText"), color: "from-rose-500/15 to-rose-500/5 text-rose-600 dark:text-rose-400" },
+    { icon: Briefcase, title: t("useCases.items.testTitle"), text: t("useCases.items.testText"), color: "from-cyan-500/15 to-cyan-500/5 text-cyan-600 dark:text-cyan-400" },
+    { icon: ShieldCheck, title: t("useCases.items.breachTitle"), text: t("useCases.items.breachText"), color: "from-indigo-500/15 to-indigo-500/5 text-indigo-600 dark:text-indigo-400" },
   ];
 
   return (
@@ -596,13 +547,13 @@ function UseCases() {
       <div className="text-center">
         <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
           <Sparkles className="h-3.5 w-3.5 text-primary" />
-          Use cases
+          {t("useCases.eyebrow")}
         </p>
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Where Temp Mail saves the day
+          {t("useCases.title")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-          Anywhere a site asks for your email just to "get started" — that's a perfect moment for a disposable address.
+          {t("useCases.subtitle")}
         </p>
       </div>
 
@@ -629,39 +580,16 @@ function UseCases() {
 /* ---------------- FAQ ---------------- */
 
 function FAQ() {
+  const { t } = useTranslation();
   const items = [
-    {
-      q: "Is MyTempMail really free?",
-      a: "Yes — 100% free, forever. No signup, no credit card, no hidden 'pro' upsells. We don't sell your data because we don't collect any.",
-    },
-    {
-      q: "How long does the email address last?",
-      a: "Each address lives for a limited time (shown next to your email as 'Expires in…'). Once it expires, the address and all messages are deleted automatically.",
-    },
-    {
-      q: "Can I receive attachments?",
-      a: "Yes. Most common attachment types — PDFs, images, documents — are received and shown in the message view, just like a regular inbox.",
-    },
-    {
-      q: "Can I send emails from a temporary address?",
-      a: "No. MyTempMail is receive-only by design. This keeps the service fast, abuse-free, and impossible to use for spam.",
-    },
-    {
-      q: "Do I need to register or install anything?",
-      a: "No. Open the page, click Generate, and you have a working inbox in under a second. There's nothing to install.",
-    },
-    {
-      q: "Is it safe and private?",
-      a: "Yes. We don't ask for your name, phone or real email, and we don't track who owns which inbox. After expiry, everything is wiped — there's nothing left to leak.",
-    },
-    {
-      q: "Can I pick my own email name and domain?",
-      a: "Absolutely. Click 'Custom email' to choose your own local part (the bit before the @) and pick a domain from the list.",
-    },
-    {
-      q: "Will websites accept a temp email?",
-      a: "The vast majority do. Some banks, government sites and a few major platforms block disposable addresses — for everything else, it works perfectly.",
-    },
+    { q: t("faq.items.freeQ"), a: t("faq.items.freeA") },
+    { q: t("faq.items.lastQ"), a: t("faq.items.lastA") },
+    { q: t("faq.items.attachQ"), a: t("faq.items.attachA") },
+    { q: t("faq.items.sendQ"), a: t("faq.items.sendA") },
+    { q: t("faq.items.regQ"), a: t("faq.items.regA") },
+    { q: t("faq.items.safeQ"), a: t("faq.items.safeA") },
+    { q: t("faq.items.customQ"), a: t("faq.items.customA") },
+    { q: t("faq.items.acceptQ"), a: t("faq.items.acceptA") },
   ];
 
   const [open, setOpen] = useState<number | null>(0);
@@ -671,13 +599,13 @@ function FAQ() {
       <div className="text-center">
         <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
           <Sparkles className="h-3.5 w-3.5 text-primary" />
-          FAQ
+          {t("faq.eyebrow")}
         </p>
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Frequently asked questions
+          {t("faq.title")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-          Everything you might want to know about disposable email and how MyTempMail keeps your inbox clean.
+          {t("faq.subtitle")}
         </p>
       </div>
 
@@ -720,15 +648,15 @@ function FAQ() {
       </div>
 
       <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-primary/5 p-6 text-center sm:p-8">
-        <h3 className="text-xl font-semibold">Still have a question?</h3>
+        <h3 className="text-xl font-semibold">{t("faq.stillTitle")}</h3>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-          We try to keep things simple. If something isn't clear, we'd love to hear from you.
+          {t("faq.stillText")}
         </p>
         <a
           href="/contact"
           className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
         >
-          Contact us
+          {t("faq.contactCta")}
         </a>
       </div>
     </section>

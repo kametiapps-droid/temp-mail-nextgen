@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How it works",
+    "useCases": "Use cases",
+    "blog": "Blog",
+    "faq": "FAQ"
+  },
+  "footer": {
+    "tagline": "Free, disposable email addresses. No signup, no spam.",
+    "rights": "All rights reserved.",
+    "madeFor": "Made for privacy.",
+    "groups": {
+      "product": "Product",
+      "tempMailFor": "Temp Mail For",
+      "resources": "Resources",
+      "company": "Company"
+    },
+    "links": {
+      "features": "Features",
+      "howItWorks": "How it works",
+      "useCases": "Use cases",
+      "freeGenerator": "Free email generator",
+      "verification": "Verification",
+      "otp": "OTP",
+      "instagram": "Instagram",
+      "netflix": "Netflix",
+      "amazon": "Amazon",
+      "tiktok": "TikTok",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "whatIs": "What is temp email?",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "disclaimer": "Disclaimer"
+    }
+  },
+  "hero": {
+    "badge": "Real-time · No signup · Free Email Service",
+    "title": "Free Temporary Email Service",
+    "subtitle": "Instant Temp Email, No sign-up. Generate a free temporary email that helps to protect your privacy and inbox from spam."
+  },
+  "emailCard": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "delete": "Delete",
+    "expiresIn": "Expires in",
+    "liveInbox": "Live inbox",
+    "syncedTabs": "Synced across all your tabs",
+    "noEmail": "No email yet.",
+    "generate": "Generate random",
+    "generating": "Generating…",
+    "custom": "Custom email",
+    "cancelCustom": "Cancel custom",
+    "customAddress": "Custom address",
+    "namePlaceholder": "your-name",
+    "validationHint": "a–z, 0–9, dot, underscore, hyphen · 1–32 chars",
+    "create": "Create",
+    "creating": "Creating…",
+    "deleteConfirm": "Delete this email and all its messages? This cannot be undone."
+  },
+  "inbox": {
+    "title": "Inbox",
+    "messageOne": "{{count}} message",
+    "messageOther": "{{count}} messages",
+    "waiting": "Waiting for messages…",
+    "selectMessage": "Select a message to read it.",
+    "from": "From",
+    "empty": "(empty)"
+  },
+  "whatIs": {
+    "eyebrow": "The basics",
+    "title": "What is a Temporary Email?",
+    "subtitle": "A free, anonymous inbox you can spin up in one click — perfect for the moments when you'd rather not hand over your real address.",
+    "points": {
+      "p1Title": "An inbox that doesn't follow you home",
+      "p1Text": "A temporary email (also called disposable, throwaway, burner, or 10-minute mail) is a real, working email address that lives for a short time and then disappears — along with everything sent to it.",
+      "p2Title": "Built for one-time signups",
+      "p2Text": "Use it whenever a site asks for your email just to send a verification link, a download, or a coupon — without owning your inbox forever.",
+      "p3Title": "Your real address stays private",
+      "p3Text": "No personal data, no account, no password. Spammers, data brokers and breach lists never see your real email.",
+      "p4Title": "Auto-deleted, no cleanup",
+      "p4Text": "When the timer runs out, the address and every message in it are wiped — leaving zero trace behind."
+    }
+  },
+  "useCases": {
+    "eyebrow": "Use cases",
+    "title": "Where Temp Mail saves the day",
+    "subtitle": "Anywhere a site asks for your email just to \"get started\" — that's a perfect moment for a disposable address.",
+    "items": {
+      "downloadsTitle": "Free downloads & ebooks",
+      "downloadsText": "Grab that PDF, whitepaper or template without subscribing to a newsletter for life.",
+      "trialsTitle": "Free trials & demos",
+      "trialsText": "Try a SaaS app or a streaming service without having to remember to cancel before charge day.",
+      "shoppingTitle": "One-off online shopping",
+      "shoppingText": "Buy from a store you'll never use again — no follow-up promo emails, no abandoned cart guilt.",
+      "paywallTitle": "Read paywalled articles",
+      "paywallText": "Get past 'sign up to continue reading' walls without giving up your inbox.",
+      "gameTitle": "Game & forum signups",
+      "gameText": "Play, comment, and post — without your real address ending up on a leaked database next year.",
+      "anonTitle": "Stay anonymous",
+      "anonText": "Sign up to surveys, beta tests, giveaways and contests with zero personal trail.",
+      "testTitle": "Test your own product",
+      "testText": "Developers and QA: spin up fresh inboxes to test signup flows, password resets and emails.",
+      "breachTitle": "Protect against breaches",
+      "breachText": "If a site you used gets hacked, your real email never appears in any breach list."
+    }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you might want to know about disposable email and how MyTempMail keeps your inbox clean.",
+    "items": {
+      "freeQ": "Is MyTempMail really free?",
+      "freeA": "Yes — 100% free, forever. No signup, no credit card, no hidden 'pro' upsells. We don't sell your data because we don't collect any.",
+      "lastQ": "How long does the email address last?",
+      "lastA": "Each address lives for a limited time (shown next to your email as 'Expires in…'). Once it expires, the address and all messages are deleted automatically.",
+      "attachQ": "Can I receive attachments?",
+      "attachA": "Yes. Most common attachment types — PDFs, images, documents — are received and shown in the message view, just like a regular inbox.",
+      "sendQ": "Can I send emails from a temporary address?",
+      "sendA": "No. MyTempMail is receive-only by design. This keeps the service fast, abuse-free, and impossible to use for spam.",
+      "regQ": "Do I need to register or install anything?",
+      "regA": "No. Open the page, click Generate, and you have a working inbox in under a second. There's nothing to install.",
+      "safeQ": "Is it safe and private?",
+      "safeA": "Yes. We don't ask for your name, phone or real email, and we don't track who owns which inbox. After expiry, everything is wiped — there's nothing left to leak.",
+      "customQ": "Can I pick my own email name and domain?",
+      "customA": "Absolutely. Click 'Custom email' to choose your own local part (the bit before the @) and pick a domain from the list.",
+      "acceptQ": "Will websites accept a temp email?",
+      "acceptA": "The vast majority do. Some banks, government sites and a few major platforms block disposable addresses — for everything else, it works perfectly."
+    },
+    "stillTitle": "Still have a question?",
+    "stillText": "We try to keep things simple. If something isn't clear, we'd love to hear from you.",
+    "contactCta": "Contact us"
+  },
+  "blogPreview": {
+    "eyebrow": "From the blog",
+    "title": "Blog for Temp Email",
+    "subtitle": "Guides, tips, and updates on disposable email, online privacy, and staying spam-free.",
+    "viewAll": "View all posts →"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

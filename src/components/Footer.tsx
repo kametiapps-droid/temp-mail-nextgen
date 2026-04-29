@@ -1,47 +1,50 @@
 import { Link } from "@tanstack/react-router";
-
-const cols = [
-  {
-    title: "Product",
-    links: [
-      { to: "/features", label: "Features" },
-      { to: "/how-it-works", label: "How it works" },
-      { to: "/use-cases", label: "Use cases" },
-    ],
-  },
-  {
-    title: "Temp Mail For",
-    links: [
-      { to: "/free-temporary-email-generator", label: "Free email generator" },
-      { to: "/disposable-email-for-verification", label: "Verification" },
-      { to: "/temp-mail-for-otp", label: "OTP" },
-      { to: "/temp-mail-for-instagram", label: "Instagram" },
-      { to: "/temp-mail-for-netflix", label: "Netflix" },
-      { to: "/temp-mail-for-amazon", label: "Amazon" },
-      { to: "/temp-mail-for-tiktok", label: "TikTok" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { to: "/blog", label: "Blog" },
-      { to: "/faq", label: "FAQ" },
-      { to: "/what-is-temporary-email", label: "What is temp email?" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { to: "/about", label: "About" },
-      { to: "/contact", label: "Contact" },
-      { to: "/privacy-policy", label: "Privacy" },
-      { to: "/terms-of-service", label: "Terms" },
-      { to: "/disclaimer", label: "Disclaimer" },
-    ],
-  },
-] as const;
+import { useTranslation } from "react-i18next";
 
 export function Footer() {
+  const { t } = useTranslation();
+
+  const cols = [
+    {
+      title: t("footer.groups.product"),
+      links: [
+        { to: "/features", label: t("footer.links.features") },
+        { to: "/how-it-works", label: t("footer.links.howItWorks") },
+        { to: "/use-cases", label: t("footer.links.useCases") },
+      ],
+    },
+    {
+      title: t("footer.groups.tempMailFor"),
+      links: [
+        { to: "/free-temporary-email-generator", label: t("footer.links.freeGenerator") },
+        { to: "/disposable-email-for-verification", label: t("footer.links.verification") },
+        { to: "/temp-mail-for-otp", label: t("footer.links.otp") },
+        { to: "/temp-mail-for-instagram", label: t("footer.links.instagram") },
+        { to: "/temp-mail-for-netflix", label: t("footer.links.netflix") },
+        { to: "/temp-mail-for-amazon", label: t("footer.links.amazon") },
+        { to: "/temp-mail-for-tiktok", label: t("footer.links.tiktok") },
+      ],
+    },
+    {
+      title: t("footer.groups.resources"),
+      links: [
+        { to: "/blog", label: t("footer.links.blog") },
+        { to: "/faq", label: t("footer.links.faq") },
+        { to: "/what-is-temporary-email", label: t("footer.links.whatIs") },
+      ],
+    },
+    {
+      title: t("footer.groups.company"),
+      links: [
+        { to: "/about", label: t("footer.links.about") },
+        { to: "/contact", label: t("footer.links.contact") },
+        { to: "/privacy-policy", label: t("footer.links.privacy") },
+        { to: "/terms-of-service", label: t("footer.links.terms") },
+        { to: "/disclaimer", label: t("footer.links.disclaimer") },
+      ],
+    },
+  ];
+
   return (
     <footer className="mt-24 border-t border-border/60 bg-muted/30">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 md:grid-cols-5">
@@ -52,9 +55,7 @@ export function Footer() {
             </span>
             MyTempMail
           </div>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Free, disposable email addresses. No signup, no spam.
-          </p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("footer.tagline")}</p>
         </div>
         {cols.map((c) => (
           <div key={c.title}>
@@ -73,8 +74,8 @@ export function Footer() {
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} MyTempMail. All rights reserved.</p>
-          <p>Made for privacy.</p>
+          <p>© {new Date().getFullYear()} MyTempMail. {t("footer.rights")}</p>
+          <p>{t("footer.madeFor")}</p>
         </div>
       </div>
     </footer>
