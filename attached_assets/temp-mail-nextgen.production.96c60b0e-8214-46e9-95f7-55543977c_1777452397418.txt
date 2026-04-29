@@ -1,0 +1,253 @@
+2026-04-29T08:44:53.726Z	Initializing build environment...
+2026-04-29T08:44:53.726Z	Initializing build environment...
+2026-04-29T08:45:14.080Z	Success: Finished initializing build environment
+2026-04-29T08:45:14.734Z	Cloning repository...
+2026-04-29T08:45:16.140Z	Restoring from dependencies cache
+2026-04-29T08:45:16.143Z	Restoring from build output cache
+2026-04-29T08:45:16.147Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2026-04-29T08:45:16.279Z	Installing project dependencies: npm clean-install --progress=false
+2026-04-29T08:45:19.471Z	npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+2026-04-29T08:45:30.525Z	
+2026-04-29T08:45:30.525Z	added 520 packages, and audited 521 packages in 14s
+2026-04-29T08:45:30.526Z	
+2026-04-29T08:45:30.526Z	124 packages are looking for funding
+2026-04-29T08:45:30.526Z	  run `npm fund` for details
+2026-04-29T08:45:30.527Z	
+2026-04-29T08:45:30.527Z	1 moderate severity vulnerability
+2026-04-29T08:45:30.527Z	
+2026-04-29T08:45:30.527Z	To address all issues, run:
+2026-04-29T08:45:30.527Z	  npm audit fix
+2026-04-29T08:45:30.527Z	
+2026-04-29T08:45:30.527Z	Run `npm audit` for details.
+2026-04-29T08:45:30.770Z	Executing user build command: npm install && npm run build
+2026-04-29T08:45:32.321Z	
+2026-04-29T08:45:32.322Z	up to date, audited 521 packages in 1s
+2026-04-29T08:45:32.323Z	
+2026-04-29T08:45:32.323Z	124 packages are looking for funding
+2026-04-29T08:45:32.324Z	  run `npm fund` for details
+2026-04-29T08:45:32.327Z	
+2026-04-29T08:45:32.327Z	1 moderate severity vulnerability
+2026-04-29T08:45:32.328Z	
+2026-04-29T08:45:32.328Z	To address all issues, run:
+2026-04-29T08:45:32.331Z	  npm audit fix
+2026-04-29T08:45:32.331Z	
+2026-04-29T08:45:32.331Z	Run `npm audit` for details.
+2026-04-29T08:45:32.658Z	
+2026-04-29T08:45:32.659Z	> build
+2026-04-29T08:45:32.659Z	> vite build
+2026-04-29T08:45:32.659Z	
+2026-04-29T08:45:36.363Z	vite v7.3.2 building client environment for production...
+2026-04-29T08:45:36.430Z	transforming...
+2026-04-29T08:45:41.913Z	✓ 1920 modules transformed.
+2026-04-29T08:45:42.194Z	rendering chunks...
+2026-04-29T08:45:42.414Z	computing gzip size...
+2026-04-29T08:45:42.447Z	dist/client/.assetsignore                                           0.02 kB
+2026-04-29T08:45:42.448Z	dist/client/assets/styles-CPuf-RjW.css                             91.56 kB │ gzip:  14.76 kB
+2026-04-29T08:45:42.448Z	dist/client/assets/clock-CVGYFsSp.js                                0.17 kB │ gzip:   0.16 kB
+2026-04-29T08:45:42.448Z	dist/client/assets/smartphone-C-kN9Lj6.js                           0.20 kB │ gzip:   0.18 kB
+2026-04-29T08:45:42.448Z	dist/client/assets/lock-DLK4Y7dC.js                                 0.20 kB │ gzip:   0.19 kB
+2026-04-29T08:45:42.448Z	dist/client/assets/mail-BO0_tIt0.js                                 0.21 kB │ gzip:   0.20 kB
+2026-04-29T08:45:42.452Z	dist/client/assets/zap-CuyzNp4D.js                                  0.26 kB │ gzip:   0.21 kB
+2026-04-29T08:45:42.452Z	dist/client/assets/user-x-CWrorfGU.js                               0.31 kB │ gzip:   0.23 kB
+2026-04-29T08:45:42.452Z	dist/client/assets/shield-check-DtFK9xPt.js                         0.32 kB │ gzip:   0.25 kB
+2026-04-29T08:45:42.452Z	dist/client/assets/trash-2-BC4mtpcB.js                              0.33 kB │ gzip:   0.22 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/shopping-bag-Dv0q86T0.js                         0.34 kB │ gzip:   0.24 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/key-round-BzNWpChw.js                            0.35 kB │ gzip:   0.26 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/eye-off-BmcrNmxp.js                              0.43 kB │ gzip:   0.27 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/PageShell-DgWBXYck.js                            0.51 kB │ gzip:   0.32 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/sparkles-DNF5rZeg.js                             0.58 kB │ gzip:   0.32 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/wand-sparkles-Hbd8iypb.js                        0.86 kB │ gzip:   0.45 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/newspaper-CgkM3wUV.js                            1.27 kB │ gzip:   0.65 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/api-C1NQQ1-1.js                                  1.71 kB │ gzip:   0.94 kB
+2026-04-29T08:45:42.453Z	dist/client/assets/blog-DCQp3IIr.js                                 1.72 kB │ gzip:   0.84 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/disclaimer-D7PGwE7Y.js                           2.79 kB │ gzip:   1.21 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/contact-BA7Hj8vN.js                              2.99 kB │ gzip:   1.43 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/blog._slug-BNuWy6yO.js                           3.24 kB │ gzip:   1.24 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/terms-of-service-3HDMixqe.js                     3.53 kB │ gzip:   1.32 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/features-DhFvOXJv.js                             3.61 kB │ gzip:   1.71 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/about-CEIKcAMp.js                                3.73 kB │ gzip:   1.62 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/privacy-policy-DYvb2LDy.js                       3.91 kB │ gzip:   1.47 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/how-it-works-CIY2tt73.js                         3.95 kB │ gzip:   1.83 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/temp-mail-for-otp-NFeNAS5w.js                    4.78 kB │ gzip:   1.99 kB
+2026-04-29T08:45:42.454Z	dist/client/assets/use-cases-CMEhPTGO.js                            4.87 kB │ gzip:   2.30 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/free-temporary-email-generator-D4zYF0Hb.js       4.91 kB │ gzip:   1.95 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/disposable-email-for-verification-ll7vaZVa.js    4.99 kB │ gzip:   2.04 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/temp-mail-for-netflix-Dy2dBnh7.js                5.07 kB │ gzip:   2.08 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/temp-mail-for-tiktok-BXf9k3fT.js                 5.13 kB │ gzip:   2.10 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/temp-mail-for-amazon-Cf2BeAyY.js                 5.23 kB │ gzip:   2.15 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/faq-D7hRuLqA.js                                  5.30 kB │ gzip:   2.43 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/temp-mail-for-instagram-CWb5CCKO.js              5.41 kB │ gzip:   2.23 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/what-is-temporary-email-CfvOyDYL.js              9.26 kB │ gzip:   3.48 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/index-CpAWWfRn.js                               21.57 kB │ gzip:   5.95 kB
+2026-04-29T08:45:42.455Z	dist/client/assets/index-B0LFv8Yc.js                              448.19 kB │ gzip: 144.80 kB
+2026-04-29T08:45:42.455Z	✓ built in 6.04s
+2026-04-29T08:45:42.456Z	vite v7.3.2 building ssr environment for production...
+2026-04-29T08:45:42.463Z	transforming...
+2026-04-29T08:45:47.400Z	✓ 1976 modules transformed.
+2026-04-29T08:45:47.684Z	rendering chunks...
+2026-04-29T08:45:47.925Z	dist/server/wrangler.json                                            1.21 kB
+2026-04-29T08:45:47.926Z	dist/server/.vite/manifest.json                                     14.08 kB
+2026-04-29T08:45:47.926Z	dist/server/assets/styles-CPuf-RjW.css                              91.56 kB
+2026-04-29T08:45:47.927Z	dist/server/assets/start-HYkvq4Ni.js                                 0.06 kB
+2026-04-29T08:45:47.927Z	dist/server/assets/__23tanstack-start-plugin-adapters-Cwee5PKy.js    0.14 kB
+2026-04-29T08:45:47.929Z	dist/server/index.js                                                 0.21 kB
+2026-04-29T08:45:47.930Z	dist/server/assets/clock-C_Cqv8E5.js                                 0.27 kB
+2026-04-29T08:45:47.932Z	dist/server/assets/lock-DM1u2XCf.js                                  0.32 kB
+2026-04-29T08:45:47.932Z	dist/server/assets/smartphone-DaNT-3jT.js                            0.32 kB
+2026-04-29T08:45:47.932Z	dist/server/assets/mail-BIZSgREO.js                                  0.32 kB
+2026-04-29T08:45:47.933Z	dist/server/assets/zap-Br-afaHV.js                                   0.38 kB
+2026-04-29T08:45:47.934Z	dist/server/assets/user-x-Cttrn22U.js                                0.44 kB
+2026-04-29T08:45:47.934Z	dist/server/assets/trash-2-BD9Ju-bM.js                               0.46 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/shield-check-CTFcnW3G.js                          0.46 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/shopping-bag-DsW_sV84.js                          0.49 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/key-round-DiKSWmoD.js                             0.50 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/eye-off-CJaY8dpc.js                               0.61 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/sparkles-BGyB5qRR.js                              0.81 kB
+2026-04-29T08:45:47.935Z	dist/server/assets/PageShell-BngKGN2e.js                             0.83 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/wand-sparkles-BkUycIcP.js                         1.19 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/newspaper-GpvZX0Kq.js                             1.79 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/blog-jqXe8FW1.js                                  2.91 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/api-BZIpKo-l.js                                   2.97 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/disclaimer-Cdyx7sXP.js                            3.65 kB
+2026-04-29T08:45:47.936Z	dist/server/assets/contact-BOfn1jDF.js                               4.16 kB
+2026-04-29T08:45:47.937Z	dist/server/assets/features-DjQDQYVv.js                              4.79 kB
+2026-04-29T08:45:47.937Z	dist/server/assets/terms-of-service-CcvQdcZA.js                      4.87 kB
+2026-04-29T08:45:47.937Z	dist/server/assets/about-quYU4dCJ.js                                 5.03 kB
+2026-04-29T08:45:47.938Z	dist/server/assets/how-it-works-hmuH1avc.js                          5.29 kB
+2026-04-29T08:45:47.938Z	dist/server/assets/privacy-policy-D74kU_U_.js                        5.42 kB
+2026-04-29T08:45:47.938Z	dist/server/assets/blog._slug-C6X-7pKT.js                            5.53 kB
+2026-04-29T08:45:47.941Z	dist/server/assets/use-cases-zvrQrXhM.js                             6.11 kB
+2026-04-29T08:45:47.941Z	dist/server/assets/temp-mail-for-otp-C-_VeoVz.js                     6.47 kB
+2026-04-29T08:45:47.941Z	dist/server/assets/_tanstack-start-manifest_v-C0plLGPB.js            6.63 kB
+2026-04-29T08:45:47.941Z	dist/server/assets/free-temporary-email-generator-4aQhM5iQ.js        6.67 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/disposable-email-for-verification-BZR6uk-e.js     6.81 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/faq-DHm4nho_.js                                   6.82 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/temp-mail-for-netflix-DG3qX6a9.js                 6.85 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/temp-mail-for-tiktok-Dw-efHd1.js                  6.92 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/temp-mail-for-amazon-BRe0BgkP.js                  7.04 kB
+2026-04-29T08:45:47.942Z	dist/server/assets/temp-mail-for-instagram-C72NPL0e.js               7.22 kB
+2026-04-29T08:45:47.943Z	dist/server/assets/what-is-temporary-email-IgGaiWAI.js              12.01 kB
+2026-04-29T08:45:47.943Z	dist/server/assets/index-BCZehMTZ.js                                35.41 kB
+2026-04-29T08:45:47.943Z	dist/server/assets/router-STRc-uu0.js                              294.19 kB
+2026-04-29T08:45:47.943Z	dist/server/assets/worker-entry-CqlOXbzq.js                        732.07 kB
+2026-04-29T08:45:47.943Z	✓ built in 5.48s
+2026-04-29T08:45:48.096Z	Success: Build command completed
+2026-04-29T08:45:48.251Z	Executing user deploy command: npx wrangler deploy
+2026-04-29T08:45:50.061Z	
+2026-04-29T08:45:50.061Z	 ⛅️ wrangler 4.82.2 (update available 4.86.0)
+2026-04-29T08:45:50.061Z	─────────────────────────────────────────────
+2026-04-29T08:45:50.062Z	Using redirected Wrangler configuration.
+2026-04-29T08:45:50.062Z	 - Configuration being used: "dist/server/wrangler.json"
+2026-04-29T08:45:50.063Z	 - Original user's configuration: "wrangler.jsonc"
+2026-04-29T08:45:50.063Z	 - Deploy configuration file: ".wrangler/deploy/config.json"
+2026-04-29T08:45:50.214Z	▲ [WARNING] Failed to match Worker name. Your config file is using the Worker name "tanstack-start-app", but the CI system expected "temp-mail-nextgen". Overriding using the CI provided Worker name. Workers Builds connected builds will attempt to open a pull request to resolve this config name mismatch.
+2026-04-29T08:45:50.214Z	
+2026-04-29T08:45:50.215Z	
+2026-04-29T08:45:50.791Z	Attaching additional modules:
+2026-04-29T08:45:50.805Z	┌───────────────────────────────────────────────────────┬──────┬─────────────┐
+2026-04-29T08:45:50.805Z	│ Name                                                  │ Type │ Size        │
+2026-04-29T08:45:50.805Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.805Z	│ assets/PageShell-BngKGN2e.js                          │ esm  │ 0.81 KiB    │
+2026-04-29T08:45:50.805Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.805Z	│ assets/__23tanstack-start-plugin-adapters-Cwee5PKy.js │ esm  │ 0.13 KiB    │
+2026-04-29T08:45:50.806Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.806Z	│ assets/_tanstack-start-manifest_v-C0plLGPB.js         │ esm  │ 6.48 KiB    │
+2026-04-29T08:45:50.806Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.806Z	│ assets/about-quYU4dCJ.js                              │ esm  │ 4.91 KiB    │
+2026-04-29T08:45:50.806Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.806Z	│ assets/api-BZIpKo-l.js                                │ esm  │ 2.90 KiB    │
+2026-04-29T08:45:50.806Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/blog-jqXe8FW1.js                               │ esm  │ 2.85 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/blog._slug-C6X-7pKT.js                         │ esm  │ 5.40 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/clock-C_Cqv8E5.js                              │ esm  │ 0.27 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/contact-BOfn1jDF.js                            │ esm  │ 4.07 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/disclaimer-Cdyx7sXP.js                         │ esm  │ 3.57 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.807Z	│ assets/disposable-email-for-verification-BZR6uk-e.js  │ esm  │ 6.65 KiB    │
+2026-04-29T08:45:50.807Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.808Z	│ assets/eye-off-CJaY8dpc.js                            │ esm  │ 0.59 KiB    │
+2026-04-29T08:45:50.809Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.809Z	│ assets/faq-DHm4nho_.js                                │ esm  │ 6.66 KiB    │
+2026-04-29T08:45:50.809Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.809Z	│ assets/features-DjQDQYVv.js                           │ esm  │ 4.67 KiB    │
+2026-04-29T08:45:50.809Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.809Z	│ assets/free-temporary-email-generator-4aQhM5iQ.js     │ esm  │ 6.52 KiB    │
+2026-04-29T08:45:50.809Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.809Z	│ assets/how-it-works-hmuH1avc.js                       │ esm  │ 5.16 KiB    │
+2026-04-29T08:45:50.809Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.810Z	│ assets/index-BCZehMTZ.js                              │ esm  │ 34.58 KiB   │
+2026-04-29T08:45:50.810Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.814Z	│ assets/key-round-DiKSWmoD.js                          │ esm  │ 0.48 KiB    │
+2026-04-29T08:45:50.814Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.815Z	│ assets/lock-DM1u2XCf.js                               │ esm  │ 0.31 KiB    │
+2026-04-29T08:45:50.815Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.815Z	│ assets/mail-BIZSgREO.js                               │ esm  │ 0.31 KiB    │
+2026-04-29T08:45:50.815Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.816Z	│ assets/newspaper-GpvZX0Kq.js                          │ esm  │ 1.75 KiB    │
+2026-04-29T08:45:50.816Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.816Z	│ assets/privacy-policy-D74kU_U_.js                     │ esm  │ 5.29 KiB    │
+2026-04-29T08:45:50.816Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.816Z	│ assets/router-STRc-uu0.js                             │ esm  │ 287.30 KiB  │
+2026-04-29T08:45:50.816Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.816Z	│ assets/shield-check-CTFcnW3G.js                       │ esm  │ 0.45 KiB    │
+2026-04-29T08:45:50.816Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.816Z	│ assets/shopping-bag-DsW_sV84.js                       │ esm  │ 0.48 KiB    │
+2026-04-29T08:45:50.817Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.817Z	│ assets/smartphone-DaNT-3jT.js                         │ esm  │ 0.31 KiB    │
+2026-04-29T08:45:50.817Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.817Z	│ assets/sparkles-BGyB5qRR.js                           │ esm  │ 0.79 KiB    │
+2026-04-29T08:45:50.817Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/start-HYkvq4Ni.js                              │ esm  │ 0.06 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/temp-mail-for-amazon-BRe0BgkP.js               │ esm  │ 6.88 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/temp-mail-for-instagram-C72NPL0e.js            │ esm  │ 7.05 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/temp-mail-for-netflix-DG3qX6a9.js              │ esm  │ 6.69 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/temp-mail-for-otp-C-_VeoVz.js                  │ esm  │ 6.31 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/temp-mail-for-tiktok-Dw-efHd1.js               │ esm  │ 6.76 KiB    │
+2026-04-29T08:45:50.818Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.818Z	│ assets/terms-of-service-CcvQdcZA.js                   │ esm  │ 4.75 KiB    │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/trash-2-BD9Ju-bM.js                            │ esm  │ 0.45 KiB    │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/use-cases-zvrQrXhM.js                          │ esm  │ 5.97 KiB    │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/user-x-Cttrn22U.js                             │ esm  │ 0.43 KiB    │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/wand-sparkles-BkUycIcP.js                      │ esm  │ 1.16 KiB    │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/what-is-temporary-email-IgGaiWAI.js            │ esm  │ 11.73 KiB   │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.819Z	│ assets/worker-entry-CqlOXbzq.js                       │ esm  │ 714.91 KiB  │
+2026-04-29T08:45:50.819Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.820Z	│ assets/zap-Br-afaHV.js                                │ esm  │ 0.37 KiB    │
+2026-04-29T08:45:50.820Z	├───────────────────────────────────────────────────────┼──────┼─────────────┤
+2026-04-29T08:45:50.820Z	│ Total (41 modules)                                    │      │ 1167.20 KiB │
+2026-04-29T08:45:50.820Z	└───────────────────────────────────────────────────────┴──────┴─────────────┘
+2026-04-29T08:45:50.820Z	🌀 Building list of assets...
+2026-04-29T08:45:50.821Z	✨ Read 42 files from the assets directory /opt/buildhome/repo/dist/client
+2026-04-29T08:45:50.829Z	🌀 Starting asset upload...
+2026-04-29T08:45:52.397Z	No updated asset files to upload. Proceeding with deployment...
+2026-04-29T08:45:52.434Z	Total Upload: 1167.41 KiB / gzip: 244.72 KiB
+2026-04-29T08:45:53.081Z	
+2026-04-29T08:45:53.081Z	Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+2026-04-29T08:45:53.082Z	
+2026-04-29T08:45:53.084Z	✘ [ERROR] A request to the Cloudflare API (/accounts/4f1fb1f21bc6c09b2565d463440ea71c/workers/scripts/temp-mail-nextgen/versions) failed.
+2026-04-29T08:45:53.084Z	
+2026-04-29T08:45:53.084Z	  Invalid _redirects configuration:
+2026-04-29T08:45:53.084Z	  Line 1: Infinite loop detected in this rule. This would cause a redirect to strip `.html` or `/index` and end up triggering this rule again. [code: 10021]
+2026-04-29T08:45:53.084Z	  To learn more about this error, visit: https://developers.cloudflare.com/workers/observability/errors/#validation-errors-10021
+2026-04-29T08:45:53.084Z	
+2026-04-29T08:45:53.085Z	  
+2026-04-29T08:45:53.085Z	  If you think this is a bug, please open an issue at: https://github.com/cloudflare/workers-sdk/issues/new/choose
+2026-04-29T08:45:53.085Z	
+2026-04-29T08:45:53.085Z	
+2026-04-29T08:45:53.092Z	🪵  Logs were written to "/opt/buildhome/.config/.wrangler/logs/wrangler-2026-04-29_08-45-49_365.log"
+2026-04-29T08:45:53.148Z	Failed: error occurred while running deploy command
