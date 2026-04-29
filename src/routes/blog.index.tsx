@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { PageShell } from "../components/PageShell";
 import { getBlogPosts, type BlogPost } from "../lib/api";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "Blog — MyTempMail" },
