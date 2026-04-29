@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
   { to: "/features", label: "Features" },
@@ -43,14 +44,20 @@ export function Header() {
               {n.label}
             </Link>
           ))}
+          <div className="ml-2">
+            <ThemeToggle />
+          </div>
         </nav>
-        <button
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-          className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-border"
-        >
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
       </div>
       {open && (
         <div className="border-t border-border/60 md:hidden">
