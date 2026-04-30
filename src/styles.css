@@ -134,4 +134,53 @@
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.4; transform: scale(0.85); }
   }
+
+  .bg-gradient-hero {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--primary) 22%, transparent) 0%, transparent 70%),
+      radial-gradient(40% 35% at 85% 20%, color-mix(in oklab, oklch(0.65 0.22 320) 22%, transparent) 0%, transparent 70%),
+      radial-gradient(40% 35% at 10% 30%, color-mix(in oklab, oklch(0.7 0.18 200) 22%, transparent) 0%, transparent 70%);
+  }
+  .bg-grid-fade {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+  }
+  .text-gradient-primary {
+    background-image: linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      color-mix(in oklab, var(--primary) 60%, oklch(0.7 0.22 320)) 60%,
+      color-mix(in oklab, var(--primary) 50%, oklch(0.75 0.18 200)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+  }
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .animate-blob {
+    animation: blob 14s ease-in-out infinite;
+  }
+  @keyframes blob {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(20px,-30px) scale(1.1); }
+    66% { transform: translate(-25px,15px) scale(0.95); }
+  }
 }

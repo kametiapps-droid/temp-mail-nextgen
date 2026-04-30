@@ -260,102 +260,144 @@ function HomePage() {
   const validLocal = /^[a-z0-9._-]{1,32}$/.test(customLocal.toLowerCase());
 
   return (
-    <main className="mx-auto max-w-5xl px-4 pb-16 pt-12 sm:pt-20">
-      {/* Hero */}
-      <section className="text-center">
-        <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">
-          <span className="h-1.5 w-1.5 rounded-full bg-success" /> {t("hero.badge")}
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-          {t("hero.title")}
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          {t("hero.subtitle")}
-        </p>
-      </section>
+    <main className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:pt-14">
+      {/* Hero + Email Generator combined */}
+      <section className="relative">
+        {/* Animated background blobs */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[36px]">
+          <div className="absolute inset-0 bg-gradient-hero" />
+          <div className="absolute inset-0 bg-grid-fade opacity-60" />
+          <div className="animate-blob absolute -left-16 top-10 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+          <div className="animate-blob absolute -right-10 top-32 h-72 w-72 rounded-full bg-fuchsia-500/15 blur-3xl [animation-delay:-4s]" />
+          <div className="animate-blob absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-cyan-500/15 blur-3xl [animation-delay:-8s]" />
+        </div>
 
-      {/* Email card */}
-      <section className="mt-10">
-        <div className="relative">
-          {/* Glow halo */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-1 rounded-[28px] bg-gradient-primary opacity-20 blur-2xl"
-          />
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-mail p-5 shadow-glow sm:p-7">
-            {/* Decorative corner icon */}
+        <div className="px-2 pb-2 pt-10 text-center sm:pt-16">
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+            </span>
+            {t("hero.badge")}
+          </p>
+          <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
+            <span className="text-gradient-primary">{t("hero.title")}</span>
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
+            {t("hero.subtitle")}
+          </p>
+        </div>
+
+        {/* Email card */}
+        <div className="relative mx-auto mt-8 max-w-3xl px-1 sm:mt-12">
+          {/* Floating mail icon */}
+          {!email && (
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-primary opacity-10 blur-2xl"
-            />
-            <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-primary">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
-                <Mail className="h-3.5 w-3.5" />
-              </span>
-              {email ? t("emailCard.yourEmail", { defaultValue: "Your temporary email" }) : t("emailCard.generateNew", { defaultValue: "Generate new email" })}
+              className="animate-float pointer-events-none absolute -top-8 left-1/2 z-10 -translate-x-1/2 rounded-2xl bg-gradient-primary p-4 shadow-glow"
+            >
+              <Mail className="h-7 w-7 text-primary-foreground" />
+            </div>
+          )}
+
+          {/* Outer glow ring */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-px rounded-[28px] bg-gradient-to-r from-primary/40 via-fuchsia-500/30 to-cyan-500/40 opacity-60 blur-[2px]"
+          />
+
+          <div className="relative overflow-hidden rounded-[26px] border border-border/60 bg-card/90 p-5 shadow-2xl backdrop-blur-xl sm:p-7">
+            {/* Top status bar */}
+            <div className="mb-5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="flex h-2 w-2 rounded-full bg-destructive/70" />
+                <span className="flex h-2 w-2 rounded-full bg-amber-400/80" />
+                <span className="flex h-2 w-2 rounded-full bg-success/80" />
+                <span className="ml-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                  {email ? t("emailCard.yourEmail", { defaultValue: "Your inbox" }) : t("emailCard.generateNew", { defaultValue: "New address" })}
+                </span>
+              </div>
+              {email && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 text-[11px] font-semibold text-success">
+                  <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-success" />
+                  {t("emailCard.liveInbox")}
+                </span>
+              )}
             </div>
 
             {email ? (
               <>
-                <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-                  <div className="group relative flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background/70 px-4 py-4 backdrop-blur">
-                    <div className="flex items-center gap-3">
-                      <AtSign className="h-5 w-5 shrink-0 text-primary" />
-                      <p className="truncate font-mono text-base font-medium tracking-tight sm:text-xl">
+                {/* Email address pill */}
+                <div className="group relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-fuchsia-500/5 p-1">
+                  <div className="flex flex-col items-stretch gap-2 rounded-xl bg-background/50 p-3 sm:flex-row sm:items-center sm:gap-3 sm:p-4">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
+                        <AtSign className="h-5 w-5" />
+                      </span>
+                      <p className="truncate font-mono text-base font-semibold tracking-tight sm:text-xl">
                         {email.email_address}
                       </p>
                     </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={copy}
-                      className={`inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-semibold transition active:scale-[0.98] ${
-                        copied
-                          ? "bg-success text-primary-foreground"
-                          : "bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95"
-                      }`}
-                    >
-                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                      {copied ? t("emailCard.copied") : t("emailCard.copy")}
-                    </button>
-                    <button
-                      onClick={remove}
-                      title={t("emailCard.delete")}
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border bg-background/70 px-4 py-3.5 text-sm font-medium backdrop-blur transition hover:bg-destructive hover:text-destructive-foreground active:scale-[0.98]"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
+                    <div className="flex shrink-0 gap-2">
+                      <button
+                        onClick={copy}
+                        className={`inline-flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition active:scale-[0.97] sm:flex-initial ${
+                          copied
+                            ? "bg-success text-primary-foreground"
+                            : "bg-gradient-primary text-primary-foreground shadow-glow hover:shadow-lg"
+                        }`}
+                      >
+                        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        <span>{copied ? t("emailCard.copied") : t("emailCard.copy")}</span>
+                      </button>
+                      <button
+                        onClick={remove}
+                        title={t("emailCard.delete")}
+                        className="inline-flex items-center justify-center rounded-xl border border-border bg-background/70 px-3.5 py-3 transition hover:border-destructive/40 hover:bg-destructive hover:text-destructive-foreground active:scale-[0.97]"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5" />
-                    {t("emailCard.expiresIn")} <span className="font-semibold text-foreground">{expiresIn}</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-success" />
-                    {t("emailCard.liveInbox")}
-                  </span>
-                  <span className="hidden sm:inline">· {t("emailCard.syncedTabs")}</span>
+
+                {/* Stats grid */}
+                <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+                  <div className="rounded-xl border border-border/60 bg-background/50 p-3 text-center backdrop-blur">
+                    <Clock className="mx-auto mb-1 h-4 w-4 text-primary" />
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("emailCard.expiresIn")}</p>
+                    <p className="mt-0.5 text-sm font-bold tabular-nums">{expiresIn}</p>
+                  </div>
+                  <div className="rounded-xl border border-border/60 bg-background/50 p-3 text-center backdrop-blur">
+                    <InboxIcon className="mx-auto mb-1 h-4 w-4 text-primary" />
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Messages</p>
+                    <p className="mt-0.5 text-sm font-bold tabular-nums">{inbox.length}</p>
+                  </div>
+                  <div className="rounded-xl border border-border/60 bg-background/50 p-3 text-center backdrop-blur">
+                    <ShieldCheck className="mx-auto mb-1 h-4 w-4 text-success" />
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Status</p>
+                    <p className="mt-0.5 text-sm font-bold text-success">Active</p>
+                  </div>
                 </div>
               </>
             ) : (
-              <div className="flex flex-col items-center gap-5 py-4 text-center">
-                <p className="max-w-md text-sm text-muted-foreground">{t("emailCard.noEmail")}</p>
+              <div className="flex flex-col items-center gap-5 py-6 text-center">
+                <p className="max-w-md text-sm text-muted-foreground sm:text-base">{t("emailCard.noEmail")}</p>
                 {TURNSTILE_SITE_KEY && <div ref={tsRef} />}
-                <div className="flex flex-wrap items-center justify-center gap-2">
+                <div className="flex w-full flex-col items-stretch justify-center gap-2 sm:flex-row sm:items-center">
                   <button
                     onClick={() => create({})}
                     disabled={loading}
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95 active:scale-[0.98] disabled:opacity-50"
+                    className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-primary px-7 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition hover:shadow-2xl active:scale-[0.97] disabled:opacity-50"
                   >
+                    <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                     <Sparkles className="h-4 w-4" />
                     {loading ? t("emailCard.generating") : t("emailCard.generate")}
                   </button>
                   <button
                     onClick={() => setCustomOpen((v) => !v)}
                     disabled={loading}
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border bg-background/70 px-6 py-3.5 text-sm font-medium backdrop-blur transition hover:bg-accent active:scale-[0.98] disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border bg-background/70 px-6 py-4 text-sm font-medium backdrop-blur transition hover:border-primary/40 hover:bg-accent active:scale-[0.97] disabled:opacity-50"
                   >
                     <Wand2 className="h-4 w-4" />
                     {customOpen ? t("emailCard.cancelCustom") : t("emailCard.custom")}
@@ -397,6 +439,13 @@ function HomePage() {
                     </button>
                   </div>
                 )}
+
+                {/* Trust badges */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-success" /> No signup</span>
+                  <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-primary" /> Anonymous</span>
+                  <span className="inline-flex items-center gap-1.5"><Sparkles className="h-3.5 w-3.5 text-primary" /> Instant</span>
+                </div>
               </div>
             )}
             {error && (
