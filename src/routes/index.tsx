@@ -276,109 +276,178 @@ function HomePage() {
 
       {/* Email card */}
       <section className="mt-10">
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
-          {email ? (
-            <>
-              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-                <div className="flex-1 overflow-hidden rounded-xl bg-muted px-4 py-3">
-                  <p className="truncate font-mono text-base sm:text-lg">{email.email_address}</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={copy}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-                  >
-                    {copied ? t("emailCard.copied") : t("emailCard.copy")}
-                  </button>
-                  <button
-                    onClick={remove}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium hover:bg-destructive hover:text-destructive-foreground"
-                  >
-                    {t("emailCard.delete")}
-                  </button>
-                </div>
-              </div>
-              <p className="mt-3 text-xs text-muted-foreground">
-                {t("emailCard.expiresIn")} <span className="font-medium text-foreground">{expiresIn}</span> · {t("emailCard.liveInbox")} · {t("emailCard.syncedTabs")}
-              </p>
-            </>
-          ) : (
-            <div className="flex flex-col items-center gap-4 py-6 text-center">
-              <p className="text-sm text-muted-foreground">{t("emailCard.noEmail")}</p>
-              {TURNSTILE_SITE_KEY && <div ref={tsRef} />}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <button
-                  onClick={() => create({})}
-                  disabled={loading}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
-                >
-                  {loading ? t("emailCard.generating") : t("emailCard.generate")}
-                </button>
-                <button
-                  onClick={() => setCustomOpen((v) => !v)}
-                  disabled={loading}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-medium hover:bg-accent disabled:opacity-50"
-                >
-                  {customOpen ? t("emailCard.cancelCustom") : t("emailCard.custom")}
-                </button>
-              </div>
-
-              {customOpen && (
-                <div className="mt-2 w-full max-w-xl rounded-xl border border-border bg-background p-4 text-left">
-                  <label className="text-xs font-medium text-muted-foreground">{t("emailCard.customAddress")}</label>
-                  <div className="mt-2 flex flex-col items-stretch gap-2 sm:flex-row">
-                    <input
-                      autoFocus
-                      value={customLocal}
-                      onChange={(e) => setCustomLocal(e.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))}
-                      placeholder={t("emailCard.namePlaceholder")}
-                      maxLength={32}
-                      className="flex-1 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    />
-                    <span className="hidden items-center px-1 text-muted-foreground sm:flex">@</span>
-                    <select
-                      value={customDomain}
-                      onChange={(e) => setCustomDomain(e.target.value)}
-                      className="rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    >
-                      {domains.map((d) => (
-                        <option key={d} value={d}>{d}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    {t("emailCard.validationHint")}
-                  </p>
-                  <button
-                    onClick={() => create({ localPart: customLocal, domain: customDomain })}
-                    disabled={loading || !validLocal}
-                    className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-40 sm:w-auto"
-                  >
-                    {loading ? t("emailCard.creating") : `${t("emailCard.create")} ${customLocal || t("emailCard.namePlaceholder")}@${customDomain}`}
-                  </button>
-                </div>
-              )}
+        <div className="relative">
+          {/* Glow halo */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-1 rounded-[28px] bg-gradient-primary opacity-20 blur-2xl"
+          />
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-mail p-5 shadow-glow sm:p-7">
+            {/* Decorative corner icon */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-primary opacity-10 blur-2xl"
+            />
+            <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-primary">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
+                <Mail className="h-3.5 w-3.5" />
+              </span>
+              {email ? t("emailCard.yourEmail", { defaultValue: "Your temporary email" }) : t("emailCard.generateNew", { defaultValue: "Generate new email" })}
             </div>
-          )}
-          {error && (
-            <p className="mt-3 rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>
-          )}
+
+            {email ? (
+              <>
+                <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+                  <div className="group relative flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background/70 px-4 py-4 backdrop-blur">
+                    <div className="flex items-center gap-3">
+                      <AtSign className="h-5 w-5 shrink-0 text-primary" />
+                      <p className="truncate font-mono text-base font-medium tracking-tight sm:text-xl">
+                        {email.email_address}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={copy}
+                      className={`inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-semibold transition active:scale-[0.98] ${
+                        copied
+                          ? "bg-success text-primary-foreground"
+                          : "bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95"
+                      }`}
+                    >
+                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                      {copied ? t("emailCard.copied") : t("emailCard.copy")}
+                    </button>
+                    <button
+                      onClick={remove}
+                      title={t("emailCard.delete")}
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border bg-background/70 px-4 py-3.5 text-sm font-medium backdrop-blur transition hover:bg-destructive hover:text-destructive-foreground active:scale-[0.98]"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5" />
+                    {t("emailCard.expiresIn")} <span className="font-semibold text-foreground">{expiresIn}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-success" />
+                    {t("emailCard.liveInbox")}
+                  </span>
+                  <span className="hidden sm:inline">· {t("emailCard.syncedTabs")}</span>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center gap-5 py-4 text-center">
+                <p className="max-w-md text-sm text-muted-foreground">{t("emailCard.noEmail")}</p>
+                {TURNSTILE_SITE_KEY && <div ref={tsRef} />}
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <button
+                    onClick={() => create({})}
+                    disabled={loading}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95 active:scale-[0.98] disabled:opacity-50"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    {loading ? t("emailCard.generating") : t("emailCard.generate")}
+                  </button>
+                  <button
+                    onClick={() => setCustomOpen((v) => !v)}
+                    disabled={loading}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border bg-background/70 px-6 py-3.5 text-sm font-medium backdrop-blur transition hover:bg-accent active:scale-[0.98] disabled:opacity-50"
+                  >
+                    <Wand2 className="h-4 w-4" />
+                    {customOpen ? t("emailCard.cancelCustom") : t("emailCard.custom")}
+                  </button>
+                </div>
+
+                {customOpen && (
+                  <div className="mt-2 w-full max-w-xl rounded-2xl border border-border bg-background/80 p-4 text-left backdrop-blur">
+                    <label className="text-xs font-medium text-muted-foreground">{t("emailCard.customAddress")}</label>
+                    <div className="mt-2 flex flex-col items-stretch gap-2 sm:flex-row">
+                      <input
+                        autoFocus
+                        value={customLocal}
+                        onChange={(e) => setCustomLocal(e.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))}
+                        placeholder={t("emailCard.namePlaceholder")}
+                        maxLength={32}
+                        className="flex-1 rounded-xl border border-border bg-card px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                      />
+                      <span className="hidden items-center px-1 text-muted-foreground sm:flex">@</span>
+                      <select
+                        value={customDomain}
+                        onChange={(e) => setCustomDomain(e.target.value)}
+                        className="rounded-xl border border-border bg-card px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                      >
+                        {domains.map((d) => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {t("emailCard.validationHint")}
+                    </p>
+                    <button
+                      onClick={() => create({ localPart: customLocal, domain: customDomain })}
+                      disabled={loading || !validLocal}
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-40 sm:w-auto"
+                    >
+                      {loading ? t("emailCard.creating") : `${t("emailCard.create")} ${customLocal || t("emailCard.namePlaceholder")}@${customDomain}`}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {error && (
+              <p className="mt-3 rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>
+            )}
+          </div>
         </div>
       </section>
 
       {/* Inbox */}
       {email && (
         <section className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
-          <div className="rounded-2xl border border-border bg-card">
-            <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <h2 className="text-sm font-semibold">{t("inbox.title")}</h2>
-              <span className="text-xs text-muted-foreground">
-                {t(inbox.length === 1 ? "inbox.messageOne" : "inbox.messageOther", { count: inbox.length })}
-              </span>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <div className="flex items-center justify-between gap-2 border-b border-border bg-gradient-mail px-4 py-3">
+              <div className="flex items-center gap-2">
+                <InboxIcon className="h-4 w-4 text-primary" />
+                <h2 className="text-sm font-semibold">{t("inbox.title")}</h2>
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                  {inbox.length}
+                </span>
+              </div>
+              <button
+                onClick={refreshInbox}
+                disabled={refreshing}
+                title={t("inbox.refresh", { defaultValue: "Refresh" })}
+                className="group relative inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-medium backdrop-blur transition hover:bg-accent disabled:opacity-60"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 text-primary ${refreshing ? "animate-spin-slow" : ""}`} />
+                <span className="tabular-nums">
+                  {refreshing
+                    ? t("inbox.refreshing", { defaultValue: "Refreshing…" })
+                    : `${secondsLeft}s`}
+                </span>
+                {/* Countdown progress ring */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-full"
+                  style={{
+                    background: `conic-gradient(color-mix(in oklab, var(--primary) 35%, transparent) ${
+                      ((REFRESH_INTERVAL - secondsLeft) / REFRESH_INTERVAL) * 360
+                    }deg, transparent 0deg)`,
+                    mask: "radial-gradient(circle, transparent 64%, black 65%)",
+                    WebkitMask: "radial-gradient(circle, transparent 64%, black 65%)",
+                  }}
+                />
+              </button>
             </div>
             <ul className="max-h-[520px] divide-y divide-border overflow-y-auto">
               {inbox.length === 0 && (
                 <li className="px-4 py-12 text-center text-sm text-muted-foreground">
+                  <InboxIcon className="mx-auto mb-3 h-8 w-8 text-muted-foreground/50" />
                   {t("inbox.waiting")}
                 </li>
               )}
@@ -386,22 +455,38 @@ function HomePage() {
                 <li key={m.id}>
                   <button
                     onClick={() => open(m)}
-                    className={`flex w-full flex-col items-start gap-1 px-4 py-3 text-left transition hover:bg-accent ${selected?.id === m.id ? "bg-accent" : ""}`}
+                    className={`flex w-full items-start gap-3 px-4 py-3 text-left transition hover:bg-accent ${selected?.id === m.id ? "bg-accent" : ""}`}
                   >
-                    <div className="flex w-full items-center justify-between gap-2">
-                      <span className={`truncate text-sm ${m.is_read ? "" : "font-semibold"}`}>{m.from_name || m.from_address}</span>
-                      <span className="shrink-0 text-xs text-muted-foreground">{new Date(m.received_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                    <span
+                      className={`mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold uppercase ${
+                        m.is_read ? "bg-muted text-muted-foreground" : "bg-gradient-primary text-primary-foreground shadow-glow"
+                      }`}
+                    >
+                      {(m.from_name || m.from_address).slice(0, 2)}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex w-full items-center justify-between gap-2">
+                        <span className={`truncate text-sm ${m.is_read ? "" : "font-semibold"}`}>{m.from_name || m.from_address}</span>
+                        <span className="shrink-0 text-xs text-muted-foreground">{new Date(m.received_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                      </div>
+                      <span className="mt-0.5 line-clamp-1 block text-sm text-muted-foreground">{m.subject}</span>
                     </div>
-                    <span className="line-clamp-1 text-sm text-muted-foreground">{m.subject}</span>
+                    {!m.is_read && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />}
                   </button>
                 </li>
               ))}
             </ul>
+            <div className="border-t border-border bg-muted/30 px-4 py-2 text-[11px] text-muted-foreground">
+              {t("inbox.lastUpdated", { defaultValue: "Last updated" })}:{" "}
+              <span className="font-medium text-foreground">
+                {new Date(lastRefreshed).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+              </span>
+            </div>
           </div>
-          <div className="rounded-2xl border border-border bg-card">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             {selected ? (
               <article className="flex h-full flex-col">
-                <header className="border-b border-border px-5 py-4">
+                <header className="border-b border-border bg-gradient-mail px-5 py-4">
                   <h3 className="text-base font-semibold">{selected.subject}</h3>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {t("inbox.from")} <span className="font-medium text-foreground">{selected.from_name || selected.from_address}</span> · {new Date(selected.received_at).toLocaleString()}
@@ -422,7 +507,10 @@ function HomePage() {
               </article>
             ) : (
               <div className="grid h-full min-h-[320px] place-items-center p-8 text-center">
-                <p className="text-sm text-muted-foreground">{t("inbox.selectMessage")}</p>
+                <div>
+                  <Mail className="mx-auto mb-3 h-10 w-10 text-muted-foreground/40" />
+                  <p className="text-sm text-muted-foreground">{t("inbox.selectMessage")}</p>
+                </div>
               </div>
             )}
           </div>
