@@ -99,3 +99,39 @@
     letter-spacing: -0.02em;
   }
 }
+
+@layer utilities {
+  .bg-gradient-mail {
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--primary) 18%, var(--card)) 0%,
+      var(--card) 45%,
+      color-mix(in oklab, var(--primary) 10%, var(--card)) 100%
+    );
+  }
+  .bg-gradient-primary {
+    background-image: linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      color-mix(in oklab, var(--primary) 70%, oklch(0.6 0.22 320)) 100%
+    );
+  }
+  .shadow-glow {
+    box-shadow:
+      0 10px 40px -12px color-mix(in oklab, var(--primary) 45%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--primary) 18%, transparent) inset;
+  }
+  .ring-glow {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 22%, transparent);
+  }
+  .animate-spin-slow {
+    animation: spin 1s linear infinite;
+  }
+  .animate-pulse-dot {
+    animation: pulse-dot 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+}
