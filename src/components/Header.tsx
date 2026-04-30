@@ -34,9 +34,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-          </span>
+          <img src="/logo.png" alt="MyTempMail Logo" className="h-8 w-8 rounded-lg object-cover" />
           MyTempMail
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
