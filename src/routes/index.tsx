@@ -16,6 +16,12 @@ import {
   Sparkles,
   Clock,
   EyeOff,
+  Copy,
+  Check,
+  RefreshCw,
+  Inbox as InboxIcon,
+  AtSign,
+  Wand2,
 } from "lucide-react";
 import {
   createEmail,
