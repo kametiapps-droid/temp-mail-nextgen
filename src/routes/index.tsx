@@ -215,6 +215,48 @@ function HomePage() {
     return `${min} min`;
   }, [email]);
 
+  // Manual inbox refresh + auto countdown indicator
+  const REFRESH_INTERVAL = 15; // seconds
+  const [refreshing, setRefreshing] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL);
+  const [lastRefreshed, setLastRefreshed] = useState<number>(() => Date.now());
+
+  const refreshInbox = useCallback(async () => {
+    if (!email) return;
+    setRefreshing(true);
+    try {
+      const msgs = await getInbox(email.id);
+      applyIncoming(msgs);
+      setLastRefreshed(Date.now());
+      setSecondsLeft(REFRESH_INTERVAL);
+    } catch {
+      /* ignore */
+    } finally {
+      setTimeout(() => setRefreshing(false), 400);
+    }
+  }, [email]);
+
+  // Reset countdown whenever email changes or new messages arrive
+  useEffect(() => {
+    setSecondsLeft(REFRESH_INTERVAL);
+    setLastRefreshed(Date.now());
+  }, [email?.id, inbox.length]);
+
+  // Tick every second; auto-refresh when reaching 0
+  useEffect(() => {
+    if (!email) return;
+    const t = setInterval(() => {
+      setSecondsLeft((s) => {
+        if (s <= 1) {
+          refreshInbox();
+          return REFRESH_INTERVAL;
+        }
+        return s - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [email, refreshInbox]);
+
   const validLocal = /^[a-z0-9._-]{1,32}$/.test(customLocal.toLowerCase());
 
   return (
