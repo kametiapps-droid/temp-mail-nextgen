@@ -19,9 +19,12 @@ export function Header() {
   useEffect(() => {
     if (!open) return;
     const close = () => setOpen(false);
-    window.addEventListener("scroll", close, { passive: true });
-    window.addEventListener("resize", close);
+    const timer = setTimeout(() => {
+      window.addEventListener("scroll", close, { passive: true });
+      window.addEventListener("resize", close);
+    }, 150);
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("scroll", close);
       window.removeEventListener("resize", close);
     };
