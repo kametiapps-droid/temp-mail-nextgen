@@ -5,8 +5,8 @@ import { seo } from "../lib/seo";
 export const Route = createFileRoute("/about")({
   head: () => seo({
     path: "/about",
-    title: "About — MyTempMail",
-    description: "About MyTempMail — our mission, our team, our principles. Why we built a disposable email service.",
+    title: "About MyTempMail — Free Disposable Email Service",
+    description: "About MyTempMail — our mission, our team, our principles. Why we built a free disposable email service that protects your privacy.",
   }),
   component: AboutPage,
 });

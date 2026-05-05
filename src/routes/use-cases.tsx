@@ -18,8 +18,9 @@ import { seo } from "../lib/seo";
 export const Route = createFileRoute("/use-cases")({
   head: () => seo({
     path: "/use-cases",
-    title: "Use Cases — MyTempMail",
+    title: "When to Use a Disposable Email — Top Use Cases | MyTempMail",
     description: "When to use a disposable email: signups, downloads, free trials, online forms, public Wi-Fi, and more. Keep your real inbox safe.",
+    keywords: "disposable email use cases, when to use temp mail, temp email for signups, throwaway email uses",
   }),
   component: UseCasesPage,
 });

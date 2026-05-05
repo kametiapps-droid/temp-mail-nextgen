@@ -17,8 +17,9 @@ import { seo } from "../lib/seo";
 export const Route = createFileRoute("/features")({
   head: () => seo({
     path: "/features",
-    title: "Features — MyTempMail",
+    title: "Features — Free Temp Mail with Real-Time Inbox & Custom Domains | MyTempMail",
     description: "Real-time inbox, custom names, multiple domains, cross-tab sync, and zero tracking. Everything that makes MyTempMail the cleanest disposable email service.",
+    keywords: "temp mail features, disposable email features, real-time inbox, custom domain email, anonymous email features",
   }),
   component: FeaturesPage,
 });

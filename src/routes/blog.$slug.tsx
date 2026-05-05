@@ -35,7 +35,7 @@ export const Route = createFileRoute("/blog/$slug")({
       publisher: {
         "@type": "Organization",
         name: SITE_NAME,
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.svg` },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
       },
       mainEntityOfPage: {
         "@type": "WebPage",

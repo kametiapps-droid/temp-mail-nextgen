@@ -98,6 +98,7 @@ const faqJsonLd = {
 export const Route = createFileRoute("/faq")({
   head: () => seo({
     path: "/faq",
+    keywords: "temp mail faq, disposable email questions, temp mail help, how to use temp mail",
     title: "FAQ — MyTempMail",
     description: "Frequently asked questions about disposable email and MyTempMail — pricing, privacy, attachments, custom names and more.",
     jsonLd: faqJsonLd,

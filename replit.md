@@ -1,43 +1,71 @@
 # MyTempMail
 
-Free disposable temporary email web app built on **TanStack Start + React + Vite + Tailwind v4**.
+Free disposable temporary email web app — instant inbox, custom name/domain, real-time SSE delivery, zero signup.
 
-## Dev
+## Run & Operate
 
-- Node 22, `npm run dev` (workflow: `Start application`)
-- Vite bound to `0.0.0.0:5000`, `allowedHosts: true` (`vite.config.ts`)
+- `npm run dev` → Vite dev server on port 5000 (workflow: `Start application`)
+- `npm run build` → production build
+- Deploy: `wrangler deploy` (Cloudflare Worker)
+- Required env vars: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_WORKER_NAME`, `CLOUDFLARE_EMAIL_WORKER_NAME`
 
-## Structure
+## Stack
 
-- `src/routes/__root.tsx` — root shell, head, no-flash inline script that sets `theme` (dark class), `lang` and `dir` from localStorage before paint. `suppressHydrationWarning` on `<html>` because the script mutates attrs pre-hydration.
-- `src/routes/index.tsx` — homepage (Hero, EmailCard, Inbox, WhatIsTempMail, UseCases, FAQ, BlogPreview).
-- `src/routes/free-temporary-email-generator|disposable-email-for-verification|temp-mail-for-otp|temp-mail-for-instagram|temp-mail-for-netflix|temp-mail-for-amazon|temp-mail-for-tiktok.tsx` — 7 SEO landing pages.
-- `src/routes/blog*`, `src/routes/about|contact|privacy|terms|disclaimer.tsx` — content pages.
-- `src/components/Header.tsx`, `Footer.tsx` — chrome (translated). Header includes `LanguageSwitcher` + `ThemeToggle` in desktop and mobile menus; mobile menu auto-closes on scroll/resize.
-- `src/components/LanguageSwitcher.tsx` — Globe-icon dropdown listing native language names; RTL-aware (`end-0`).
-- `src/components/ThemeToggle.tsx` — toggles `.dark` class and persists to localStorage `theme`.
-- `src/lib/i18n.ts` — i18next + react-i18next init. `SUPPORTED_LANGUAGES` (en, ar, hi, zh, ko, fa) with `dir`. `applyLanguageSideEffects` sets `<html lang>` + `<html dir>` and persists to localStorage `lang`.
-- `src/locales/{en,ar,hi,zh,ko,fa}.json` — translations for nav/footer/hero/emailCard/inbox/whatIs/useCases/faq/blogPreview/language. SEO landing pages and legal pages are not yet translated.
-- `src/lib/api.ts` — Workers API client (Cloudflare); `getBlogPosts()` powers BlogPreview.
+- **Framework**: TanStack Start (React 19 + TanStack Router file-based routing)
+- **Runtime**: Node 22, Vite 7, deployed as Cloudflare Worker (`src/server.ts`)
+- **Styling**: Tailwind CSS v4 (no Radix UI — removed)
+- **Icons**: lucide-react
+- **i18n**: i18next + react-i18next (EN, AR, HI, ZH, KO, FA)
+- **State**: Custom email-store with BroadcastChannel cross-tab sync + SSE
 
-## SEO
+## Where things live
 
-- `src/lib/seo.ts` — `seo({path,title,description,...})` helper returns `{meta, links, scripts}` with full title/desc, robots, canonical, complete OG, Twitter card, and optional JSON-LD. `SITE_URL`, `SITE_NAME`, `DEFAULT_OG_IMAGE` exported here.
-- `src/routes/__root.tsx` — defaults: theme-color, og:site_name, og:locale, twitter:card, default og:image, favicon, robots index/follow + Organization & WebSite JSON-LD.
-- Every route's `head()` uses `seo()` for canonical + complete OG/Twitter. Per-page `keywords` where applicable.
-- `src/routes/index.tsx` — WebApplication JSON-LD.
-- `src/routes/faq.tsx` — FAQPage JSON-LD generated from `groups`.
-- `src/routes/blog.$slug.tsx` — TanStack Router `loader` fetches post server-side, then real `head()` (title/desc/og:image from cover_image/article:published_time) + Article JSON-LD. Component hydrates from `Route.useLoaderData()` so first paint already shows the post (good for SEO + UX).
-- `public/robots.txt` — allows all, disallows /api/, blocks GPTBot/CCBot, points to sitemap.
-- `src/server.ts` — handles `/sitemap.xml` directly: fetches `/api/blog`, returns dynamic XML with all 19 static URLs + every blog post (lastmod from `published_at`). Cached at edge for 6h SWR 24h.
+- `src/routes/__root.tsx` — root shell, org/website JSON-LD, no-flash theme script
+- `src/routes/index.tsx` — homepage (Hero, EmailCard, Inbox, WhatIs, UseCases, FAQ, BlogPreview)
+- `src/routes/blog.$slug.tsx` — SSR blog posts via TanStack loader
+- `src/routes/[19 SEO pages].tsx` — landing + legal + content pages
+- `src/lib/seo.ts` — `seo()` helper, `SITE_URL`, `SITE_NAME`, `DEFAULT_OG_IMAGE`
+- `src/lib/api.ts` — Cloudflare Worker API client + SSE
+- `src/lib/email-store.ts` — cross-tab leader election + inbox state
+- `src/server.ts` — Cloudflare Worker entry: SSR, caching (Cache API), sitemap.xml
+- `public/og-image.png` — 1200×630 OG/social share image
+- `public/logo.png` — site logo (152KB PNG)
+- `public/robots.txt` — allows Googlebot, blocks AI scrapers
 
-## Cloudflare Worker / caching
+## Architecture decisions
 
-- `src/server.ts` — custom Worker wrapping `@tanstack/react-start/server-entry`. Uses Cloudflare **Cache API** (`caches.default`) explicitly to cache HTML responses (Cache-Control headers alone don't cache Worker responses).
-- Cache TTLs: homepage 10min edge, static SEO pages 24h, blog posts 12h, sitemap 6h. All with long SWR.
-- After deploy, do "Purge Everything" once in Cloudflare dashboard if old broken HTML may be cached.
+- **Cloudflare Cache API** used explicitly (not just Cache-Control headers) — Workers bypass CDN cache otherwise
+- **No shadcn/ui** — all 35 Radix UI components removed; pages use plain Tailwind + lucide only
+- **SSR via TanStack Start** — full HTML served on first request; Google sees complete content
+- **Leader election** in email-store.ts — only one tab maintains the SSE connection
+- **No user auth** — anonymous by design; no login, no sessions, no DB from frontend
 
-## Conventions
+## Product
 
-- User communicates in Hindi/English mix; dislikes unsolicited additions — keep changes scoped to what was asked.
-- End each user-facing reply with a single bold "Next, I can…" suggestion.
+- Generate disposable email (custom name + domain choice)
+- Real-time inbox via SSE (Server-Sent Events)
+- 7 SEO landing pages (Instagram, Netflix, Amazon, TikTok, OTP, verification, generator)
+- Blog (fetched from `mytempmail-api` Cloudflare Worker)
+- 6-language i18n with RTL support (AR, FA)
+- Dark/light mode with no-flash localStorage script
+
+## User preferences
+
+- Hindi/English mix in conversation
+- No unsolicited changes — keep scope tight
+- End each reply with bold "Next, I can…" suggestion
+
+## Gotchas
+
+- `og-image.png` must be in `public/` — currently using banner image (87KB)
+- `favicon.svg` does NOT exist — use `logo.png` everywhere
+- www redirect: Cloudflare Redirect Rule deployed (301 www→root) ✅
+- Always HTTPS + HSTS enabled via Cloudflare API ✅
+- After Cloudflare deploy, run "Purge Everything" if stale HTML cached
+- Domain is ~13 days old — ranking on page 50 is expected; give it 3-6 months
+
+## Pointers
+
+- Cloudflare Zone ID: `a46fb5cc583ba9c2b3835238041aeaef`
+- Workers: `mytempmail-api` (API), `temp-mail-nextgen` (frontend SSR)
+- Free tier usage: ~800 req/day (limit: 100k/day) — very safe

@@ -6,8 +6,9 @@ import { seo } from "../lib/seo";
 export const Route = createFileRoute("/how-it-works")({
   head: () => seo({
     path: "/how-it-works",
-    title: "How it works — MyTempMail",
+    title: "How Temporary Email Works — 4 Simple Steps | MyTempMail",
     description: "How MyTempMail generates a disposable inbox in one click and keeps your real email private. Four simple steps from one click to a working disposable inbox.",
+    keywords: "how does temp mail work, temporary email how it works, disposable inbox steps, how to use temp mail",
   }),
   component: HowItWorksPage,
 });
